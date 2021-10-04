@@ -1,0 +1,40 @@
+paths:
+  /accounts/{accountId}/posts/{postId}/like:
+    post:
+      security:
+        - jwt: []
+      tags:
+        - Likes
+      summary: Give a 'like' to a post
+      produces:
+        - application/json
+
+  /accounts/{accountId}/posts/{postId}/dislike:
+    delete:
+      security:
+        - jwt: []
+      tags:
+        - Likes
+      summary: Give a 'dislike' to a post
+      produces:
+        - application/json
+
+  /accounts/{accountId}/comments/{commentId}/like:
+    post:
+      security:
+        - jwt: []
+      tags:
+        - Likes
+      summary: Give a 'like' to a comment
+      produces:
+        - application/json
+
+  /accounts/{accountId}/comments/{commentId}/dislike:
+    delete:
+      security:
+        - jwt: []
+      tags:
+        - Likes
+      summary: Give a 'dislike' to a comment
+      produces:
+        - application/json

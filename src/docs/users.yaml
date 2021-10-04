@@ -1,0 +1,80 @@
+paths:
+  /sign-in:
+    post:
+      tags:
+        - Auth
+      summary: Login as a registered user
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: credentials
+          description: Credentials to login
+          schema:
+            type: object
+            required: true
+            properties:
+              email:
+                type: string
+                example: user@ravn.co
+              password:
+                type: string
+                example: mypassword123
+      responses:
+        201:
+          description: An object with the user information and token
+        404:
+          description: User not found
+  /sign-up:
+    post:
+      tags:
+        - Auth
+      summary: Register a user
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: User
+          description: User information
+          schema:
+            type: object
+            required: true
+            properties:
+              name:
+                type: string
+                example: Juan Perez
+              email:
+                type: string
+                example: juanperez@ravn.co
+              password:
+                type: string
+                example: mypassword123
+      responses:
+        201:
+          description: An object with the user information and token
+        400:
+          description: Invalid user supplied
+
+  /password:
+    patch:
+      tags:
+        - Auth
+      summary: Send an email with a request to update his password
+      produces:
+        - application/json
+
+  /reset-password/{token}:
+    post:
+      tags:
+        - Auth
+      summary: Reset the password using the token sent in the email
+      produces:
+        - application/json
+
+  /verify/{token}:
+    post:
+      tags:
+        - Auth
+      summary: The server verify the email previusly registered
+      produces:
+        - application/json

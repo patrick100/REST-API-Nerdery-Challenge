@@ -1,0 +1,85 @@
+paths:
+  /accounts/me/posts/{postId}/comments/create:
+    post:
+      security:
+        - jwt: []
+      tags:
+        - Comments
+      summary: Create a new comment in a post
+      produces:
+        - application/json
+  /posts/{postId}/comments:
+    get:
+      tags:
+        - Comments
+      summary: Get all comments of a post
+      produces:
+        - application/json
+      responses:
+        201:
+          description: An object with all posts
+
+  /accounts/me/posts/{postId}/comments/{commentId}:
+    put:
+      security:
+        - jwt: []
+      tags:
+        - Comments
+      summary: Update a personal comment
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description:
+          required: true
+          type: string
+        - in: body
+          name: update pet
+          description: It enables a user to update pet profile
+          required: false
+      responses:
+        201:
+          description: The post updated
+        401:
+          description: Unauthorized users
+    delete:
+      security:
+        - jwt: []
+      tags:
+        - Comments
+      summary: Delete a personal comment
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description:
+          required: true
+          type: string
+      responses:
+        201:
+          description: An object with a user updated user profile detail
+        401:
+          description: Unauthorized users
+
+  /accounts/{accountId}/posts/{postId}/comments/{commentId}:
+    delete:
+      security:
+        - jwt: []
+      tags:
+        - Comments
+      summary: Delete a comment as a moderator
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description:
+          required: true
+          type: string
+      responses:
+        201:
+          description: An object with a user updated user profile detail
+        401:
+          description: Unauthorized users
