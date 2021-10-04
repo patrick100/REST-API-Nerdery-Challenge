@@ -11,6 +11,12 @@ const swaggerSpec = require('./docs/configuration');
 //console.log(process.env.MY_NAME);
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.post('/sign-in', (req, res) => {
+  res.status(201).json({ token: 'mytoken' });
+});
 
 app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 

@@ -1,0 +1,36 @@
+paths:
+  /accounts/{accountId}/posts/{postId}/report:
+    post:
+      security:
+        - jwt: []
+      tags:
+        - Reports
+      summary: Report a post
+      produces:
+        - application/json
+    delete:
+      security:
+        - jwt: []
+      tags:
+        - Reports
+      summary: Remove a report from a post
+      produces:
+        - application/json
+
+  /accounts/{accountId}/comments/{commentId}/report:
+    post:
+      security:
+        - jwt: []
+      tags:
+        - Reports
+      summary: Report a comment
+      produces:
+        - application/json
+    delete:
+      security:
+        - jwt: []
+      tags:
+        - Reports
+      summary: Remove a report from a comment
+      produces:
+        - application/json

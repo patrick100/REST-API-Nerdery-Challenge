@@ -1,0 +1,127 @@
+paths:
+  /posts:
+    get:
+      tags:
+        - Posts
+      summary: Get all posts
+      produces:
+        - application/json
+      responses:
+        201:
+          description: An object with all posts
+
+  /accounts/me/posts/create:
+    post:
+      security:
+        - jwt: []
+      tags:
+        - Posts
+      summary: Create a new post
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: credentials
+          description: Post created by a registered user
+          schema:
+            type: object
+            required: true
+            properties:
+              title:
+                type: string
+                example: Celebrating my birthday
+              password:
+                body: string
+                example: Today I am celebraring my 25th birthday with my family and friends
+      responses:
+        201:
+          description: The created post object
+        401:
+          description: Unauthorized users
+
+  /accounts/{accountId}/posts:
+    get:
+      tags:
+        - Posts
+      summary: Get all posts of an account
+      produces:
+        - application/json
+      responses:
+        201:
+          description: An object with all posts
+
+  /accounts/me/posts:
+    get:
+      tags:
+        - Posts
+      summary: Get all post of a personal account
+      produces:
+        - application/json
+      responses:
+        201:
+          description: An object with all posts
+
+  /accounts/me/posts/{postId}:
+    put:
+      security:
+        - jwt: []
+      tags:
+        - Posts
+      summary: Update a personal post
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description:
+          required: true
+          type: string
+        - in: body
+          name: update pet
+          description: It enables a user to update pet profile
+          required: false
+      responses:
+        201:
+          description: The post updated
+        401:
+          description: Unauthorized users
+    delete:
+      security:
+        - jwt: []
+      tags:
+        - Posts
+      summary: Delete a personal post
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description:
+          required: true
+          type: string
+      responses:
+        201:
+          description: An object with a user updated user profile detail
+        401:
+          description: Unauthorized users
+
+  /accounts/{accountId}/posts/{postId}:
+    delete:
+      security:
+        - jwt: []
+      tags:
+        - Posts
+      summary: Delete a post as a moderator
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description:
+          required: true
+          type: string
+      responses:
+        201:
+          description: An object with a user updated user profile detail
+        401:
+          description: Unauthorized users
