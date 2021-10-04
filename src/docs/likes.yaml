@@ -5,17 +5,33 @@ paths:
         - jwt: []
       tags:
         - Likes
-      summary: Give a 'like' to a post
+      summary: Give a 'like' from a post
       produces:
         - application/json
-
-  /accounts/{accountId}/posts/{postId}/dislike:
     delete:
       security:
         - jwt: []
       tags:
         - Likes
-      summary: Give a 'dislike' to a post
+      summary: Remove a 'like' from a post
+      produces:
+        - application/json
+
+  /accounts/{accountId}/posts/{postId}/dislike:
+    post:
+      security:
+        - jwt: []
+      tags:
+        - Likes
+      summary: Give a 'dislike' from a post
+      produces:
+        - application/json
+    delete:
+      security:
+        - jwt: []
+      tags:
+        - Likes
+      summary: Remove a 'dislike' from a post
       produces:
         - application/json
 
@@ -25,16 +41,32 @@ paths:
         - jwt: []
       tags:
         - Likes
-      summary: Give a 'like' to a comment
+      summary: Give a 'like' from a comment
       produces:
         - application/json
-
-  /accounts/{accountId}/comments/{commentId}/dislike:
     delete:
       security:
         - jwt: []
       tags:
         - Likes
-      summary: Give a 'dislike' to a comment
+      summary: Remove a 'like' from a comment
+      produces:
+        - application/json
+
+  /accounts/{accountId}/comments/{commentId}/dislike:
+    post:
+      security:
+        - jwt: []
+      tags:
+        - Likes
+      summary: Give a 'dislike' from a comment
+      produces:
+        - application/json
+    delete:
+      security:
+        - jwt: []
+      tags:
+        - Likes
+      summary: Remove a 'dislike' from a comment
       produces:
         - application/json
