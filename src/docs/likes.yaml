@@ -6,16 +6,46 @@ paths:
       tags:
         - Likes
       summary: Give a 'like' from a post
+      parameters:
+        - in: path
+          name: accountId 
+          required: true
+        - in: path
+          name: postId
+          required: true
       produces:
         - application/json
+      responses:
+        '201':
+          description: Created
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
     delete:
       security:
         - jwt: []
       tags:
         - Likes
       summary: Remove a 'like' from a post
+      parameters:
+        - in: path
+          name: accountId 
+          required: true
+        - in: path
+          name: postId
+          required: true
       produces:
         - application/json
+      responses:
+        '200':
+          description:
+            OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
 
   /accounts/{accountId}/posts/{postId}/dislike:
     post:
@@ -24,16 +54,45 @@ paths:
       tags:
         - Likes
       summary: Give a 'dislike' from a post
+      parameters:
+        - in: path
+          name: accountId 
+          required: true
+        - in: path
+          name: postId
+          required: true
       produces:
         - application/json
+      responses:
+        '201':
+          description: Created
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
     delete:
       security:
         - jwt: []
       tags:
         - Likes
       summary: Remove a 'dislike' from a post
+      parameters:
+        - in: path
+          name: accountId 
+          required: true
+        - in: path
+          name: postId
+          required: true
       produces:
         - application/json
+      responses:
+        '200':
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
 
   /accounts/{accountId}/comments/{commentId}/like:
     post:
@@ -42,16 +101,45 @@ paths:
       tags:
         - Likes
       summary: Give a 'like' from a comment
+      parameters:
+        - in: path
+          name: accountId 
+          required: true
+        - in: path
+          name: commentId
+          required: true
       produces:
         - application/json
+      responses:
+        '201':
+          description: Created
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      
     delete:
       security:
         - jwt: []
       tags:
         - Likes
       summary: Remove a 'like' from a comment
+      parameters:
+        - in: path
+          name: accountId 
+          required: true
+        - in: path
+          name: commentId
+          required: true
       produces:
         - application/json
+      responses:
+        '200':
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
 
   /accounts/{accountId}/comments/{commentId}/dislike:
     post:
@@ -60,13 +148,70 @@ paths:
       tags:
         - Likes
       summary: Give a 'dislike' from a comment
+      parameters:
+        - in: path
+          name: accountId 
+          required: true
+        - in: path
+          name: commentId
+          required: true
       produces:
         - application/json
+      responses:
+        '201':
+          description: Created
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
     delete:
       security:
         - jwt: []
       tags:
         - Likes
       summary: Remove a 'dislike' from a comment
+      parameters:
+        - in: path
+          name: accountId 
+          required: true
+        - in: path
+          name: commentId
+          required: true
       produces:
         - application/json
+      responses:
+        '200':
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+components:
+  responses:
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        title:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
