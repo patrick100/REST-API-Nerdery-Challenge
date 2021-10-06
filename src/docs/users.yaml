@@ -79,16 +79,16 @@ paths:
       produces:
         - application/json
 
-  /accounts/me/profile:
+  /profile:
     get:
       tags:
         - Account
-      summary: Get information of a personal profile
+      summary: Get profile information
       produces:
         - application/json
     patch:
       tags:
         - Account
-      summary: Update the information of a personal profile
+      summary: Update profile information
       produces:
         - application/json

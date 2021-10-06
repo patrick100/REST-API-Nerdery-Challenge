@@ -1,5 +1,5 @@
 paths:
-  /accounts/{accountId}/posts/{postId}/report:
+  /posts/{postId}/report:
     post:
       security:
         - jwt: []
@@ -17,7 +17,7 @@ paths:
       produces:
         - application/json
 
-  /accounts/{accountId}/comments/{commentId}/report:
+  /comments/{commentId}/report:
     post:
       security:
         - jwt: []

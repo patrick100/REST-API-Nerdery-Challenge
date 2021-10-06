@@ -1,13 +1,4 @@
 paths:
-  /accounts/me/posts/{postId}/comments/create:
-    post:
-      security:
-        - jwt: []
-      tags:
-        - Comments
-      summary: Create a new comment in a post
-      produces:
-        - application/json
   /posts/{postId}/comments:
     get:
       tags:
@@ -18,14 +9,22 @@ paths:
       responses:
         201:
           description: An object with all posts
+    post:
+      security:
+        - jwt: []
+      tags:
+        - Comments
+      summary: Create a new comment in a post
+      produces:
+        - application/json
 
-  /accounts/me/posts/{postId}/comments/{commentId}:
+  /posts/{postId}/comments/{commentId}:
     put:
       security:
         - jwt: []
       tags:
         - Comments
-      summary: Update a personal comment
+      summary: Update a comment in a post
       produces:
         - application/json
       parameters:
@@ -43,12 +42,14 @@ paths:
           description: The post updated
         401:
           description: Unauthorized users
+
+  /accounts/{accountId}/posts/{postId}/comments/{commentId}:
     delete:
       security:
         - jwt: []
       tags:
         - Comments
-      summary: Delete a personal comment
+      summary: Delete a comment as a moderator
       produces:
         - application/json
       parameters:
@@ -63,13 +64,13 @@ paths:
         401:
           description: Unauthorized users
 
-  /accounts/{accountId}/posts/{postId}/comments/{commentId}:
+  /accounts/me/posts/{postId}/comments/{commentId}:
     delete:
       security:
         - jwt: []
       tags:
         - Comments
-      summary: Delete a comment as a moderator
+      summary: Delete a personal comment
       produces:
         - application/json
       parameters:
