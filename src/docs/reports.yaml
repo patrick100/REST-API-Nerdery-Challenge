@@ -6,31 +6,158 @@ paths:
       tags:
         - Reports
       summary: Report a post
+      parameters:
+        - in: path
+          name: accountId
+          required: true
+        - in: path
+          name: postId
+          required: true
       produces:
         - application/json
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /accounts/{accountId}/posts/{postId}/reports/id:
     delete:
       security:
         - jwt: []
       tags:
         - Reports
-      summary: Remove a report from a post
+      summary: Remove a report from a 
+      parameters:
+        - in: path
+          name: accountId
+          required: true
+        - in: path
+          name: postId
+          required: true
+        - in: path
+          name: id
+          required: true
       produces:
         - application/json
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
 
-  /accounts/{accountId}/comments/{commentId}/report:
+
+  /posts/{postId}/comments/{commentId}/report:
     post:
       security:
         - jwt: []
       tags:
         - Reports
       summary: Report a comment
+      parameters:
+        - in: path
+          name: postId
+          required: true
+        - in: path
+          name: commentId
+          required: true
       produces:
         - application/json
+      responses:
+        '201':
+          $ref: '#/components/responses/created'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        
+  /posts/{postId}/comments/{commentId}/reports/id:
     delete:
       security:
         - jwt: []
       tags:
         - Reports
       summary: Remove a report from a comment
+      parameters:
+        - in: path
+          name: postId
+          required: true
+        - in: path
+          name: commentId
+          required: true
       produces:
         - application/json
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+components:
+  responses:
+    created:
+      description: created
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Response'
+    success:
+      description: OK
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NoContent:
+      description: No Content
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Response'
+
+
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        title:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
+    Response:
+      type: object
+      properties:
+        uuid:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+    ReportList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              uuid:
+                type: string
+              title:
+                type: string
+              description:
+                type: string
