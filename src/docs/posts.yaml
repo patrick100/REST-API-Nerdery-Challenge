@@ -19,17 +19,16 @@ paths:
         - application/json
       parameters:
         - in: body
-          name: credentials
+          name: body
           description: Post created by a registered user
           schema:
             type: object
-            required: true
             properties:
               title:
                 type: string
                 example: Celebrating my birthday
-              password:
-                body: string
+              body:
+                type: string
                 example: Today I am celebraring my 25th birthday with my family and friends
       responses:
         201:

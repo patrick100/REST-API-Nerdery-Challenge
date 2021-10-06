@@ -7,8 +7,12 @@ paths:
       produces:
         - application/json
       responses:
-        201:
-          description: An object with all posts
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Comments'
     post:
       security:
         - jwt: []
@@ -17,6 +21,28 @@ paths:
       summary: Create a new comment in a post
       produces:
         - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Post created by a registered user
+          schema:
+            type: object
+            properties:
+              post_id:
+                type: integer
+              comment:
+                type: string
+              draft:
+                type: boolean
+      responses:
+        201:
+          description: The created comment object
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Comment'
+        400:
+          description: Invalid input
 
   /posts/{postId}/comments/{commentId}:
     put:
@@ -24,24 +50,35 @@ paths:
         - jwt: []
       tags:
         - Comments
-      summary: Update a comment in a post
+      summary: Update an existing comment by Id
       produces:
         - application/json
       parameters:
-        - name: id
+        - name: postId
           in: path
-          description:
-          required: true
+          type: string
+        - name: commentId
+          in: path
           type: string
         - in: body
-          name: update pet
-          description: It enables a user to update pet profile
-          required: false
+          name: body
+          description: It enables update an existent comment in a post
+          schema:
+            type: object
+            properties:
+              comment:
+                type: string
+              draft:
+                type: boolean
       responses:
-        201:
-          description: The post updated
-        401:
-          description: Unauthorized users
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Comment'
+        400:
+          description: Invalid input
 
   /accounts/{accountId}/posts/{postId}/comments/{commentId}:
     delete:
@@ -84,3 +121,25 @@ paths:
           description: An object with a user updated user profile detail
         401:
           description: Unauthorized users
+
+definitions:
+  Comment:
+    type: 'object'
+    properties:
+      id:
+        type: integer
+        format: int64
+      post_id:
+        type: integer
+      user_id:
+        type: integer
+      comment:
+        type: string
+      likes:
+        type: integer
+      dislikes:
+        type: integer
+  Comments:
+    type: array
+    items:
+      $ref: '#/definitions/Comment'
