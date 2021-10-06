@@ -1,0 +1,14 @@
+paths:
+  /profile:
+    get:
+      tags:
+        - Account
+      summary: Get profile information
+      produces:
+        - application/json
+    patch:
+      tags:
+        - Account
+      summary: Update profile information
+      produces:
+        - application/json

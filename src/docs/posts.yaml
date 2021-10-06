@@ -9,8 +9,6 @@ paths:
       responses:
         201:
           description: An object with all posts
-
-  /accounts/me/posts/create:
     post:
       security:
         - jwt: []
@@ -54,14 +52,14 @@ paths:
     get:
       tags:
         - Posts
-      summary: Get all post of a personal account
+      summary: Get my personal posts
       produces:
         - application/json
       responses:
         201:
           description: An object with all posts
 
-  /accounts/me/posts/{postId}:
+  /posts/{postId}:
     put:
       security:
         - jwt: []
@@ -85,6 +83,8 @@ paths:
           description: The post updated
         401:
           description: Unauthorized users
+
+  /accounts/me/posts/{postId}:
     delete:
       security:
         - jwt: []

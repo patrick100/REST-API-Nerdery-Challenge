@@ -1,5 +1,5 @@
 paths:
-  /accounts/{accountId}/posts/{postId}/like:
+  /posts/{postId}/like:
     post:
       security:
         - jwt: []
@@ -47,7 +47,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
-  /accounts/{accountId}/posts/{postId}/dislike:
+  /posts/{postId}/dislike:
     post:
       security:
         - jwt: []
@@ -94,7 +94,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
-  /accounts/{accountId}/comments/{commentId}/like:
+  /comments/{commentId}/like:
     post:
       security:
         - jwt: []
@@ -141,7 +141,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
-  /accounts/{accountId}/comments/{commentId}/dislike:
+  /comments/{commentId}/dislike:
     post:
       security:
         - jwt: []

@@ -78,17 +78,3 @@ paths:
       summary: The server verify the email previusly registered
       produces:
         - application/json
-
-  /accounts/me/profile:
-    get:
-      tags:
-        - Account
-      summary: Get information of a personal profile
-      produces:
-        - application/json
-    patch:
-      tags:
-        - Account
-      summary: Update the information of a personal profile
-      produces:
-        - application/json
