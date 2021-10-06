@@ -1,4 +1,23 @@
 paths:
+  /posts/{postId}/reports:
+    get:
+      tags:
+        - Reports
+      summary: Get all the reports
+      parameters:
+        - in: path
+          name: postId
+          required: true
+      produces:
+       - application/json
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportList'
+  
   /posts/{postId}/report:
     post:
       security:
