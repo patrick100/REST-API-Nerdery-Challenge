@@ -7,8 +7,12 @@ paths:
       produces:
         - application/json
       responses:
-        201:
-          description: An object with all posts
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePosts'
     post:
       security:
         - jwt: []
@@ -20,22 +24,21 @@ paths:
       parameters:
         - in: body
           name: body
-          description: Post created by a registered user
+          description: Create a new post
           schema:
             type: object
             properties:
               title:
                 type: string
-                example: Celebrating my birthday
               body:
                 type: string
-                example: Today I am celebraring my 25th birthday with my family and friends
       responses:
-        201:
-          description: The created post object
-        401:
-          description: Unauthorized users
-
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePost'
   /accounts/{accountId}/posts:
     get:
       tags:
@@ -43,9 +46,19 @@ paths:
       summary: Get all posts of an account
       produces:
         - application/json
+      parameters:
+        - name: accountId
+          in: path
+          type: integer
       responses:
-        201:
-          description: An object with all posts
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePosts'
+        '404':
+          $ref: '#/components/responses/NotFound'
 
   /accounts/me/posts:
     get:
@@ -55,8 +68,12 @@ paths:
       produces:
         - application/json
       responses:
-        201:
-          description: An object with all posts
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePosts'
 
   /posts/{postId}:
     put:
@@ -68,20 +85,31 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: id
+        - name: postId
           in: path
-          description:
           required: true
           type: string
         - in: body
-          name: update pet
-          description: It enables a user to update pet profile
-          required: false
+          name: body
+          description: Update a post
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+              body:
+                type: string
+              draft:
+                type: boolean
       responses:
-        201:
-          description: The post updated
-        401:
-          description: Unauthorized users
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePost'
+        '404':
+          $ref: '#/components/responses/NotFound'
 
   /accounts/me/posts/{postId}:
     delete:
@@ -93,16 +121,18 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: id
+        - name: postId
           in: path
-          description:
-          required: true
           type: string
       responses:
-        201:
-          description: An object with a user updated user profile detail
-        401:
-          description: Unauthorized users
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePost'
+        '404':
+          $ref: '#/components/responses/NotFound'
 
   /accounts/{accountId}/posts/{postId}:
     delete:
@@ -114,13 +144,60 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: id
+        - name: accountId
           in: path
-          description:
-          required: true
+          type: string
+        - name: postId
+          in: path
           type: string
       responses:
-        201:
-          description: An object with a user updated user profile detail
-        401:
-          description: Unauthorized users
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePost'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+components:
+  schemas:
+    Post:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        user_id:
+          type: integer
+        title:
+          type: string
+        body:
+          type: string
+        likes:
+          type: integer
+        dislikes:
+          type: integer
+
+    ResponsePost:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Post'
+
+    ResponsePosts:
+      type: object
+      properties:
+        pagination:
+          type: object
+          properties:
+            current_page:
+              type: integer
+            prev_page:
+              type: boolean
+            next_page:
+              type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Post'
