@@ -1,0 +1,28 @@
+components:
+  responses:
+    created:
+      description: created
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Response'
+    success:
+      description: OK
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NoContent:
+      description: No Content
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Response'
