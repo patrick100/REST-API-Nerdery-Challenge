@@ -9,7 +9,7 @@ paths:
           name: postId
           required: true
       produces:
-       - application/json
+        - application/json
       responses:
         '200':
           description: OK
@@ -17,7 +17,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ReportList'
-  
+
   /posts/{postId}/report:
     post:
       security:
@@ -25,6 +25,8 @@ paths:
       tags:
         - Reports
       summary: Report a post
+      requestBody:
+        $ref: '#/components/requestBodies/ReportBody'
       parameters:
         - in: path
           name: accountId
@@ -64,7 +66,7 @@ paths:
       produces:
         - application/json
       responses:
-        '204':
+        '200':
           $ref: '#/components/responses/NoContent'
         '401':
           $ref: '#/components/responses/Unauthorized'
@@ -77,6 +79,8 @@ paths:
       tags:
         - Reports
       summary: Report a comment
+      requestBody:
+        $ref: '#/components/requestBodies/ReportBody'
       parameters:
         - in: path
           name: postId
@@ -109,12 +113,21 @@ paths:
       produces:
         - application/json
       responses:
-        '204':
+        '200':
           $ref: '#/components/responses/NoContent'
         '401':
           $ref: '#/components/responses/Unauthorized'
 
 components:
+  requestBodies:
+    ReportBody:
+      description: Report
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Report'
+
   responses:
     created:
       description: created
@@ -122,22 +135,26 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Response'
+            
     success:
       description: OK
+
     NotFound:
       description: The specified resource was not found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+
     Unauthorized:
       description: Unauthorized
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+
     NoContent:
-      description: No Content
+      description: OK
       content:
         application/json:
           schema:
@@ -145,18 +162,34 @@ components:
 
 
   schemas:
+    Report:
+      type: object
+      properties:
+        title:
+          type: string
+          description: title of the report
+          example: example of title report
+        description:
+          type: string
+          description: description of the report
+          example: This is the body of the report
+
     Error:
       type: object
       properties:
         code:
           type: integer
+          example: 4xx
         title:
           type: string
+          example: Error Title
         message:
           type: string
+          example: Description of the error
       required:
         - code
         - message
+
     Response:
       type: object
       properties:
@@ -166,6 +199,7 @@ components:
           type: string
         description:
           type: string
+
     ReportList:
       type: object
       properties:
