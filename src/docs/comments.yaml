@@ -6,13 +6,19 @@ paths:
       summary: Get all comments of a post
       produces:
         - application/json
+      parameters:
+        - name: postId
+          in: path
+          type: integer
       responses:
         '200':
-          description: Successful operation
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponseComments'
+        '404':
+          $ref: '#/components/responses/NotFound'
     post:
       security:
         - jwt: []
@@ -119,11 +125,12 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: id
+        - name: postId
           in: path
-          description:
-          required: true
-          type: string
+          type: integer
+        - name: commentId
+          in: path
+          type: integer
       responses:
         '200':
           description: OK
