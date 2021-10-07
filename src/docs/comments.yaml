@@ -7,12 +7,12 @@ paths:
       produces:
         - application/json
       responses:
-        200:
+        '200':
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/definitions/Comments'
+                $ref: '#/components/schemas/ResponseComments'
     post:
       security:
         - jwt: []
@@ -24,7 +24,7 @@ paths:
       parameters:
         - in: body
           name: body
-          description: Post created by a registered user
+          description: Create a new comment
           schema:
             type: object
             properties:
@@ -35,14 +35,14 @@ paths:
               draft:
                 type: boolean
       responses:
-        201:
-          description: The created comment object
+        '201':
+          description: Created
           content:
             application/json:
               schema:
-                $ref: '#/definitions/Comment'
-        400:
-          description: Invalid input
+                $ref: '#/components/schemas/ResponseComment'
+        '404':
+          $ref: '#/components/responses/NotFound'
 
   /posts/{postId}/comments/{commentId}:
     put:
@@ -56,13 +56,13 @@ paths:
       parameters:
         - name: postId
           in: path
-          type: string
+          type: integer
         - name: commentId
           in: path
-          type: string
+          type: integer
         - in: body
           name: body
-          description: It enables update an existent comment in a post
+          description: Update a comment
           schema:
             type: object
             properties:
@@ -71,14 +71,14 @@ paths:
               draft:
                 type: boolean
       responses:
-        200:
-          description: Successful operation
+        '200':
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/definitions/Comment'
-        400:
-          description: Invalid input
+                $ref: '#/components/schemas/ResponseComment'
+        '404':
+          $ref: '#/components/responses/NotFound'
 
   /accounts/{accountId}/posts/{postId}/comments/{commentId}:
     delete:
@@ -90,16 +90,24 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: id
+        - name: accountId
           in: path
-          description:
-          required: true
-          type: string
+          type: integer
+        - name: postId
+          in: path
+          type: integer
+        - name: commentId
+          in: path
+          type: integer
       responses:
-        201:
-          description: An object with a user updated user profile detail
-        401:
-          description: Unauthorized users
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseComment'
+        '404':
+          $ref: '#/components/responses/NotFound'
 
   /accounts/me/posts/{postId}/comments/{commentId}:
     delete:
@@ -117,29 +125,53 @@ paths:
           required: true
           type: string
       responses:
-        201:
-          description: An object with a user updated user profile detail
-        401:
-          description: Unauthorized users
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseComment'
+        '404':
+          $ref: '#/components/responses/NotFound'
 
-definitions:
-  Comment:
-    type: 'object'
-    properties:
-      id:
-        type: integer
-        format: int64
-      post_id:
-        type: integer
-      user_id:
-        type: integer
-      comment:
-        type: string
-      likes:
-        type: integer
-      dislikes:
-        type: integer
-  Comments:
-    type: array
-    items:
-      $ref: '#/definitions/Comment'
+components:
+  schemas:
+    Comment:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        post_id:
+          type: integer
+        user_id:
+          type: integer
+        comment:
+          type: string
+        likes:
+          type: integer
+        dislikes:
+          type: integer
+
+    ResponseComment:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Comment'
+
+    ResponseComments:
+      type: object
+      properties:
+        pagination:
+          type: object
+          properties:
+            current_page:
+              type: integer
+            prev_page:
+              type: boolean
+            next_page:
+              type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
