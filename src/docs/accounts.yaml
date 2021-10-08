@@ -44,7 +44,6 @@ components:
           schema:
             $ref: '#/components/schemas/accountParams'
 
-
   responses:
     successResponse:
       description: OK
@@ -59,7 +58,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-
 
   schemas:
     accountParams:
@@ -85,16 +83,3 @@ components:
           type: string
           description: Email of the user
           example: jhond@example.com
-
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          example: 4xx
-        title:
-          type: string
-          example: Error Title
-        message:
-          type: string
-          example: Description of the error

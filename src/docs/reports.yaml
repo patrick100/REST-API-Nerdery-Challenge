@@ -48,6 +48,16 @@ paths:
         - in: path
           name: postId
           required: true
+        - in: body
+          name: body
+          description: Create a post report
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+              description:
+                type: string
       produces:
         - application/json
       responses:
@@ -69,8 +79,6 @@ paths:
       tags:
         - Reports
       summary: Report a comment
-      requestBody:
-        $ref: '#/components/requestBodies/ReportBody'
       parameters:
         - in: path
           name: postId
@@ -78,6 +86,16 @@ paths:
         - in: path
           name: commentId
           required: true
+        - in: body
+          name: body
+          description: Create a comment report
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+              description:
+                type: string
       produces:
         - application/json
       responses:

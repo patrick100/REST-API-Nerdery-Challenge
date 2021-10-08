@@ -5,10 +5,13 @@ components:
       properties:
         code:
           type: integer
+          example: 4xx
         title:
           type: string
+          example: Error Title
         message:
           type: string
+          example: Description of the error
       required:
         - code
         - message
