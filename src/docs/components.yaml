@@ -1,12 +1,21 @@
 components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        title:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
   responses:
-    created:
-      description: created
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Response'
-    success:
+    Created:
+      description: Created
+    Success:
       description: OK
     NotFound:
       description: The specified resource was not found
@@ -22,7 +31,3 @@ components:
             $ref: '#/components/schemas/Error'
     NoContent:
       description: No Content
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Response'

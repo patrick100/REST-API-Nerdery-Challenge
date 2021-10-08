@@ -12,7 +12,7 @@ paths:
           type: integer
       responses:
         '200':
-          description: OK
+          $ref: '#/components/responses/Success'
           content:
             application/json:
               schema:
@@ -28,6 +28,9 @@ paths:
       produces:
         - application/json
       parameters:
+        - name: postId
+          in: path
+          type: integer
         - in: body
           name: body
           description: Create a new comment
@@ -42,7 +45,7 @@ paths:
                 type: boolean
       responses:
         '201':
-          description: Created
+          description: 'Created'
           content:
             application/json:
               schema:
@@ -149,9 +152,9 @@ components:
         id:
           type: integer
           format: int64
-        post_id:
+        postId:
           type: integer
-        user_id:
+        userId:
           type: integer
         comment:
           type: string

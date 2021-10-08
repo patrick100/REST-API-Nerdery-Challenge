@@ -39,6 +39,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponsePost'
+
   /accounts/{accountId}/posts:
     get:
       tags:
@@ -168,7 +169,7 @@ components:
         id:
           type: integer
           format: int64
-        user_id:
+        userId:
           type: integer
         title:
           type: string
