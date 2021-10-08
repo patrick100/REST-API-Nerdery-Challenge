@@ -5,7 +5,7 @@ paths:
         - jwt: []
       tags:
         - Reports
-      summary: Get all post reports
+      summary: Get all post reports as a moderator
       produces:
         - application/json
       responses:
@@ -24,7 +24,7 @@ paths:
         - jwt: []
       tags:
         - Reports
-      summary: Get all comment reports
+      summary: Get all comment reports as a moderator
       produces:
         - application/json
       responses:

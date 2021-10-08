@@ -77,7 +77,7 @@ paths:
                 $ref: '#/components/schemas/ResponsePosts'
 
   /posts/{postId}:
-    put:
+    patch:
       security:
         - jwt: []
       tags:

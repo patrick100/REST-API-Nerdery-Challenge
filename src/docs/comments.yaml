@@ -54,7 +54,7 @@ paths:
           $ref: '#/components/responses/NotFound'
 
   /posts/{postId}/comments/{commentId}:
-    put:
+    patch:
       security:
         - jwt: []
       tags:
