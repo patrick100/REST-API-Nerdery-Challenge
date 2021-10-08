@@ -1,23 +1,30 @@
 paths:
-  /posts/{postId}/like:
-    post:
+  /posts/{postId}/likes:
+    patch:
       security:
         - jwt: []
       tags:
         - Likes
-      summary: Give a 'like' from a post
+      summary: Give a 'like' or 'dislike' to a post
       parameters:
-        - in: path
-          name: accountId 
-          required: true
         - in: path
           name: postId
           required: true
+        - in: body
+          name: body
+          description: Create or update like status
+          schema:
+            type: object
+            properties:
+              isLike:
+                type: boolean
+                description: true to like, false to dislike
+
       produces:
         - application/json
       responses:
-        '201':
-          description: Created
+        '204':
+          $ref: '#/components/responses/NoContent'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -28,11 +35,8 @@ paths:
         - jwt: []
       tags:
         - Likes
-      summary: Remove a 'like' from a post
+      summary: Remove a 'like' or 'dislike' to a post
       parameters:
-        - in: path
-          name: accountId 
-          required: true
         - in: path
           name: postId
           required: true
@@ -40,32 +44,41 @@ paths:
         - application/json
       responses:
         '200':
-          description:
-            OK
+          $ref: '#/components/responses/NoContent'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
 
-  /posts/{postId}/dislike:
-    post:
+  /posts/{postId}/comments/{commentId}/likes:
+    patch:
       security:
         - jwt: []
       tags:
         - Likes
-      summary: Give a 'dislike' from a post
+      summary: Give a 'like' or 'dislike' to a comment
       parameters:
-        - in: path
-          name: accountId 
-          required: true
         - in: path
           name: postId
           required: true
+        - in: path
+          name: commentId
+          required: true
+        - in: body
+          name: body
+          description: Create or update like status
+          schema:
+            type: object
+            properties:
+              isLike:
+                type: boolean
+                description: true to like, false to dislike
+
       produces:
         - application/json
       responses:
-        '201':
-          description: Created
+        '204':
+          $ref: '#/components/responses/NoContent'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -76,58 +89,11 @@ paths:
         - jwt: []
       tags:
         - Likes
-      summary: Remove a 'dislike' from a post
+      summary: Remove a 'like' or 'dislike' to a comment
       parameters:
-        - in: path
-          name: accountId 
-          required: true
         - in: path
           name: postId
           required: true
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: OK
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-
-  /comments/{commentId}/like:
-    post:
-      security:
-        - jwt: []
-      tags:
-        - Likes
-      summary: Give a 'like' from a comment
-      parameters:
-        - in: path
-          name: accountId 
-          required: true
-        - in: path
-          name: commentId
-          required: true
-      produces:
-        - application/json
-      responses:
-        '201':
-          description: Created
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-      
-    delete:
-      security:
-        - jwt: []
-      tags:
-        - Likes
-      summary: Remove a 'like' from a comment
-      parameters:
-        - in: path
-          name: accountId 
-          required: true
         - in: path
           name: commentId
           required: true
@@ -135,54 +101,7 @@ paths:
         - application/json
       responses:
         '200':
-          description: OK
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-
-  /comments/{commentId}/dislike:
-    post:
-      security:
-        - jwt: []
-      tags:
-        - Likes
-      summary: Give a 'dislike' from a comment
-      parameters:
-        - in: path
-          name: accountId 
-          required: true
-        - in: path
-          name: commentId
-          required: true
-      produces:
-        - application/json
-      responses:
-        '201':
-          description: Created
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-
-    delete:
-      security:
-        - jwt: []
-      tags:
-        - Likes
-      summary: Remove a 'dislike' from a comment
-      parameters:
-        - in: path
-          name: accountId 
-          required: true
-        - in: path
-          name: commentId
-          required: true
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: OK
+          $ref: '#/components/responses/NoContent'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '404':
