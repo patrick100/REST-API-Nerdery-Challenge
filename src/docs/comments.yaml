@@ -12,7 +12,7 @@ paths:
           type: integer
       responses:
         '200':
-          $ref: '#/components/responses/Success'
+          $ref: 'OK'
           content:
             application/json:
               schema:

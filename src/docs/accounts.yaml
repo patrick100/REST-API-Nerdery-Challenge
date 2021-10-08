@@ -1,85 +1,156 @@
 paths:
-  /profile:
+  /accounts/{accountId}:
     get:
       tags:
-        - Account
-      summary: Get profile information
-      parameters:
-        - in: path
-          name: accountId
-          required: true
+        - Accounts
+      summary: Get the public profile of an account
       produces:
         - application/json
+      parameters:
+        - name: accountId
+          in: path
+          type: integer
       responses:
-        200:
-          $ref: '#/components/responses/successResponse'
-        401:
-          $ref: '#/components/responses/unauthorizedResponse'
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseAccountPublic'
+        '404':
+          $ref: '#/components/responses/NotFound'
 
-    patch:
+  /accounts/me:
+    get:
+      security:
+        - jwt: []
       tags:
-        - Account
-      summary: Update profile information
-      requestBody:
-        $ref: '#/components/requestBodies/UpdateAccount'
-      parameters:
-        - in: path
-          name: accountId
-          required: true
+        - Accounts
+      summary: Get personal profile information
       produces:
         - application/json
       responses:
-        200:
-          $ref: '#/components/responses/successResponse'
-        401:
-          $ref: '#/components/responses/unauthorizedResponse'
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseAccount'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /accounts:
+    patch:
+      security:
+        - jwt: []
+      tags:
+        - Accounts
+      summary: Update personal profile information
+      parameters:
+        - in: body
+          name: body
+          description: Update profile
+          schema:
+            type: object
+            properties:
+              isPublicName:
+                type: boolean
+              isPublicEmail:
+                type: boolean
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseComment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
 
 components:
-  requestBodies:
-    UpdateAccount:
-      description: Account information
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/accountParams'
-
-  responses:
-    successResponse:
-      description: OK
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/profileResponse'
-
-    unauthorizedResponse:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-
   schemas:
-    accountParams:
+    Account:
       type: object
       properties:
+        id:
+          type: integer
+          format: int64
         name:
           type: string
-          required: true
-          example: David
         email:
           type: string
-          required: true
-          example: david@example.com
+        isPublicName:
+          type: boolean
+        isPublicEmail:
+          type: boolean
+    AccountPublic:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        email:
+          type: string
+    ResponseAccount:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Account'
+    ResponseAccountPublic:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AccountPublic'
+# components:
+#   requestBodies:
+#     UpdateAccount:
+#       description: Account information
+#       required: true
+#       content:
+#         application/json:
+#           schema:
+#             $ref: '#/components/schemas/accountParams'
 
-    profileResponse:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the user
-          example: John Doe
-        email:
-          type: string
-          description: Email of the user
-          example: jhond@example.com
+#   responses:
+#     successResponse:
+#       description: OK
+#       content:
+#         application/json:
+#           schema:
+#             $ref: '#/components/schemas/profileResponse'
+
+#     unauthorizedResponse:
+#       description: Unauthorized
+#       content:
+#         application/json:
+#           schema:
+#             $ref: '#/components/schemas/Error'
+
+#   schemas:
+#     accountParams:
+#       type: object
+#       properties:
+#         name:
+#           type: string
+#           required: true
+#           example: David
+#         email:
+#           type: string
+#           required: true
+#           example: david@example.com
+
+#     profileResponse:
+#       type: object
+#       properties:
+#         name:
+#           type: string
+#           description: Name of the user
+#           example: John Doe
+#         email:
+#           type: string
+#           description: Email of the user
+#           example: jhond@example.com
