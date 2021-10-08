@@ -3,13 +3,13 @@ paths:
     post:
       tags:
         - Auth
-      summary: Login as a registered user
+      summary: Login user into the system
       produces:
         - application/json
       parameters:
         - in: body
-          name: credentials
-          description: Credentials to login
+          name: body
+          description: Login as registered user
           schema:
             type: object
             required: true
@@ -25,17 +25,18 @@ paths:
           description: An object with the user information and token
         404:
           description: User not found
+
   /sign-up:
     post:
       tags:
         - Auth
-      summary: Register a user
+      summary: Register a user into the system
       produces:
         - application/json
       parameters:
         - in: body
-          name: User
-          description: User information
+          name: body
+          description: Register a new user
           schema:
             type: object
             required: true
@@ -55,26 +56,42 @@ paths:
         400:
           description: Invalid user supplied
 
-  /password:
-    patch:
+  /sign-out:
+    delete:
       tags:
         - Auth
-      summary: Send an email with a request to update his password
+      summary: Disconnect a user from the system
       produces:
         - application/json
 
-  /reset-password/{token}:
+  /verify-email:
     post:
       tags:
         - Auth
-      summary: Reset the password using the token sent in the email
+      summary: Send link to verify email
       produces:
         - application/json
 
-  /verify/{token}:
+  /verify-email/{accountId}/{token}:
     post:
       tags:
         - Auth
-      summary: The server verify the email previusly registered
+      summary: Verify user email
+      produces:
+        - application/json
+
+  /password-reset:
+    post:
+      tags:
+        - Auth
+      summary: Send password reset link
+      produces:
+        - application/json
+
+  /password-reset/{accountId}/{token}:
+    post:
+      tags:
+        - Auth
+      summary: Reset user password
       produces:
         - application/json
