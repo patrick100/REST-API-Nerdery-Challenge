@@ -69,6 +69,8 @@ paths:
       tags:
         - Reports
       summary: Report a comment
+      requestBody:
+        $ref: '#/components/requestBodies/ReportBody'
       parameters:
         - in: path
           name: postId

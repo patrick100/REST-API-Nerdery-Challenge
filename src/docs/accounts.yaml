@@ -4,11 +4,97 @@ paths:
       tags:
         - Account
       summary: Get profile information
+      parameters:
+        - in: path
+          name: accountId
+          required: true
       produces:
         - application/json
+      responses:
+        200:
+          $ref: '#/components/responses/successResponse'
+        401:
+          $ref: '#/components/responses/unauthorizedResponse'
+
     patch:
       tags:
         - Account
       summary: Update profile information
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateAccount'
+      parameters:
+        - in: path
+          name: accountId
+          required: true
       produces:
         - application/json
+      responses:
+        200:
+          $ref: '#/components/responses/successResponse'
+        401:
+          $ref: '#/components/responses/unauthorizedResponse'
+
+components:
+  requestBodies:
+    UpdateAccount:
+      description: Account information
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/accountParams'
+
+
+  responses:
+    successResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/profileResponse'
+
+    unauthorizedResponse:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+
+  schemas:
+    accountParams:
+      type: object
+      properties:
+        name:
+          type: string
+          required: true
+          example: David
+        email:
+          type: string
+          required: true
+          example: david@example.com
+
+    profileResponse:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the user
+          example: John Doe
+        email:
+          type: string
+          description: Email of the user
+          example: jhond@example.com
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 4xx
+        title:
+          type: string
+          example: Error Title
+        message:
+          type: string
+          example: Description of the error
