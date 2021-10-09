@@ -51,6 +51,7 @@ paths:
         - in: body
           name: body
           description: Create a post report
+          required: true
           schema:
             type: object
             properties:
@@ -89,6 +90,7 @@ paths:
         - in: body
           name: body
           description: Create a comment report
+          required: true
           schema:
             type: object
             properties:

@@ -10,6 +10,7 @@ paths:
         - in: body
           name: body
           description: Register a new user
+          required: true
           schema:
             type: object
             required: true
@@ -43,7 +44,8 @@ paths:
       parameters:
         - in: body
           name: body
-          description: Login as registered user
+          description: Login as a registered user
+          required: true
           schema:
             type: object
             required: true
@@ -84,6 +86,13 @@ paths:
       tags:
         - Auth
       summary: Verify user email
+      parameters:
+        - in: path
+          name: accountId
+          required: true
+        - in: path
+          name: token
+          required: true
       produces:
         - application/json
       responses:
@@ -101,6 +110,7 @@ paths:
         - in: body
           name: body
           description: Create
+          required: true
           schema:
             type: object
             properties:
@@ -118,9 +128,16 @@ paths:
       produces:
         - application/json
       parameters:
+        - in: path
+          name: accountId
+          required: true
+        - in: path
+          name: token
+          required: true
         - in: body
           name: body
           description: Create
+          required: true
           schema:
             type: object
             properties:

@@ -10,6 +10,7 @@ paths:
         - name: accountId
           in: path
           type: integer
+          required: true
       responses:
         '200':
           description: 'OK'
@@ -50,6 +51,7 @@ paths:
         - in: body
           name: body
           description: Update profile
+          required: true
           schema:
             type: object
             properties:

@@ -10,9 +10,10 @@ paths:
         - name: postId
           in: path
           type: integer
+          required: true
       responses:
         '200':
-          $ref: 'OK'
+          description: 'OK'
           content:
             application/json:
               schema:
@@ -31,9 +32,11 @@ paths:
         - name: postId
           in: path
           type: integer
+          required: true
         - in: body
           name: body
           description: Create a new comment
+          required: true
           schema:
             type: object
             properties:
@@ -66,12 +69,15 @@ paths:
         - name: postId
           in: path
           type: integer
+          required: true
         - name: commentId
           in: path
           type: integer
+          required: true
         - in: body
           name: body
           description: Update a comment
+          required: true
           schema:
             type: object
             properties:
@@ -102,12 +108,15 @@ paths:
         - name: accountId
           in: path
           type: integer
+          required: true
         - name: postId
           in: path
           type: integer
+          required: true
         - name: commentId
           in: path
           type: integer
+          required: true
       responses:
         '200':
           description: OK
@@ -131,9 +140,11 @@ paths:
         - name: postId
           in: path
           type: integer
+          required: true
         - name: commentId
           in: path
           type: integer
+          required: true
       responses:
         '200':
           description: OK
