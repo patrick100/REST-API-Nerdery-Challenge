@@ -6,6 +6,11 @@ paths:
       tags:
         - Reports
       summary: Get all post reports as a moderator
+      parameters:
+        - in: query
+          name: page
+        - in: query
+          name: size
       produces:
         - application/json
       responses:
@@ -25,6 +30,11 @@ paths:
       tags:
         - Reports
       summary: Get all comment reports as a moderator
+      parameters:
+        - in: query
+          name: page
+        - in: query
+          name: size
       produces:
         - application/json
       responses:

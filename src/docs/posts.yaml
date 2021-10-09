@@ -4,6 +4,11 @@ paths:
       tags:
         - Posts
       summary: Get all posts
+      parameters:
+        - in: query
+          name: page
+        - in: path
+          name: query
       produces:
         - application/json
       responses:
@@ -49,10 +54,14 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: accountId
-          in: path
+        - in: path
+          name: accountId
           type: integer
           required: true
+        - in: path
+          name: page
+        - in: path
+          name: size
       responses:
         '200':
           description: OK
@@ -68,6 +77,11 @@ paths:
       tags:
         - Posts
       summary: Get my personal posts
+      parameters:
+        - in: path
+          name: page
+        - in: path
+          name: size
       produces:
         - application/json
       responses:

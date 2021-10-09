@@ -11,6 +11,10 @@ paths:
           in: path
           type: integer
           required: true
+        - in: query
+          name: page
+        - in: query
+          name: size
       responses:
         '200':
           description: 'OK'
