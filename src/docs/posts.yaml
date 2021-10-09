@@ -45,6 +45,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponsePost'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
 
   /accounts/{accountId}/posts:
     get:
@@ -74,6 +76,8 @@ paths:
 
   /accounts/me/posts:
     get:
+      security:
+        - jwt: []
       tags:
         - Posts
       summary: Get my personal posts
@@ -91,6 +95,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponsePosts'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
 
   /posts/{postId}:
     patch:
@@ -128,6 +134,8 @@ paths:
                 $ref: '#/components/schemas/ResponsePost'
         '404':
           $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
 
   /accounts/me/posts/{postId}:
     delete:
@@ -152,6 +160,8 @@ paths:
                 $ref: '#/components/schemas/ResponsePost'
         '404':
           $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
 
   /accounts/{accountId}/posts/{postId}:
     delete:
@@ -180,6 +190,8 @@ paths:
                 $ref: '#/components/schemas/ResponsePost'
         '404':
           $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
 
 components:
   schemas:
