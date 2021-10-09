@@ -117,9 +117,9 @@ components:
     Report:
       type: object
       properties:
-        id:
+        uuid:
           type: integer
-          format: int64
+          format: uuid
         userId:
           type: integer
         resourceId:

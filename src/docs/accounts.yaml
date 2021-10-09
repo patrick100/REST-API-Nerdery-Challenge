@@ -76,9 +76,6 @@ components:
     Account:
       type: object
       properties:
-        id:
-          type: integer
-          format: int64
         name:
           type: string
         email:
@@ -90,9 +87,6 @@ components:
     AccountPublic:
       type: object
       properties:
-        id:
-          type: integer
-          format: int64
         name:
           type: string
         email:
