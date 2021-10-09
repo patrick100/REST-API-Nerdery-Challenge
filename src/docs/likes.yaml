@@ -12,7 +12,8 @@ paths:
           required: true
         - in: body
           name: body
-          description: Create or update like status
+          description: Create or update 'like' or 'dislike' post
+          required: true
           schema:
             type: object
             properties:
@@ -40,6 +41,16 @@ paths:
         - in: path
           name: postId
           required: true
+        - in: body
+          name: body
+          description: Delete 'like' or 'dislike'
+          required: true
+          schema:
+            type: object
+            properties:
+              isLike:
+                type: boolean
+                description: true to like, false to dislike
       produces:
         - application/json
       responses:
@@ -66,7 +77,8 @@ paths:
           required: true
         - in: body
           name: body
-          description: Create or update like status
+          description: Create or update 'like' or 'dislike' comment
+          required: true
           schema:
             type: object
             properties:
@@ -97,6 +109,16 @@ paths:
         - in: path
           name: commentId
           required: true
+        - in: body
+          name: body
+          description: Delete 'like' or 'dislike'
+          required: true
+          schema:
+            type: object
+            properties:
+              isLike:
+                type: boolean
+                description: true to like, false to dislike
       produces:
         - application/json
       responses:
