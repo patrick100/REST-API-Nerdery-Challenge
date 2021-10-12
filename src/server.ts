@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import dotenv from 'dotenv-safe';
+import dotenv from 'dotenv';
 import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
 import cors, { CorsOptions } from 'cors';
@@ -7,7 +7,7 @@ import createHttpError, { HttpError } from 'http-errors';
 import { PrismaClient } from '@prisma/client';
 import { router } from './router';
 
-dotenv.config({ allowEmptyValues: true, example: './.env.example' });
+dotenv.config();
 
 export const prisma = new PrismaClient({
   rejectOnNotFound: error => new createHttpError.NotFound(error.message),
