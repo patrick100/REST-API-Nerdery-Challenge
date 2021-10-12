@@ -7,7 +7,7 @@ import createHttpError, { HttpError } from 'http-errors';
 import { PrismaClient } from '@prisma/client';
 import { router } from './router';
 
-dotenv.config({ allowEmptyValues: true });
+dotenv.config({ allowEmptyValues: true, example: './.env.example' });
 
 export const prisma = new PrismaClient({
   rejectOnNotFound: error => new createHttpError.NotFound(error.message),
