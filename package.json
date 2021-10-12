@@ -12,6 +12,7 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "build": "tsc -p tsconfig.prod.json",
+    "postinstall": "npm run build",
     "start": "node dist/server.js"
   },
   "repository": {
