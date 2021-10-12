@@ -1,1 +1,1 @@
-release: npx prisma migrate dev && npx prisma db seed
+release: npx prisma db push --preview-feature && npx prisma db seed
