@@ -1,5 +1,9 @@
 # REST-API-Nerdery-Challenge
 
+## Demo
+
+- https://blog-api-challenge-ravn.herokuapp.com
+
 ## Prisma
 
 - Create database and tables
