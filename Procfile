@@ -1,1 +1,1 @@
-release: npx prisma migrate reset
+release: npx prisma migrate dev && npx prisma db seed
