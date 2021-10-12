@@ -2,7 +2,7 @@ import express, { Router } from 'express';
 import { usersRoutes } from './routes/users.route';
 import swaggerUi from 'swagger-ui-express';
 const expressRouter = express.Router();
-const swaggerSpec = require('../docs/configuration');
+import swaggerSpec from './docs/configuration';
 
 export function router(app: Router): Router {
   app.use('/api/v1/users', usersRoutes());
