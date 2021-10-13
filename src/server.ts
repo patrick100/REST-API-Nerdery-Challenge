@@ -9,7 +9,7 @@ import { PORT, ENVIROMENT } from './config';
 
 export const prisma = new PrismaClient({
   rejectOnNotFound: error => new createHttpError.NotFound(error.message),
-  log: ['query', 'info', 'warn', 'error'],
+  log: ['error'],
 });
 
 const app = express();
