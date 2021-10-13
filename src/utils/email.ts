@@ -1,5 +1,7 @@
 import sgMail from '@sendgrid/mail';
 import Email from '../interfaces/email.interface';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export const sendEmail = async (emailData: Email) => {
   sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
