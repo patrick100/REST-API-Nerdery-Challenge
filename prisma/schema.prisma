@@ -36,8 +36,7 @@ model User {
 model Token {
   id        Int      @id @default(autoincrement())
   uuid      String   @unique @default(uuid()) @db.Uuid
-  refreshToken  String
-  jti  String
+  token     String
   user  User     @relation(fields: [userId], references: [id])
   userId Int
   tokenExpiresAt  DateTime

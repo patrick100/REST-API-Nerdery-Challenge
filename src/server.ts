@@ -1,22 +1,18 @@
 import 'reflect-metadata';
-import dotenv from 'dotenv';
 import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
 import cors, { CorsOptions } from 'cors';
 import createHttpError, { HttpError } from 'http-errors';
 import { PrismaClient } from '@prisma/client';
 import { router } from './router';
-
-dotenv.config();
+import { PORT, ENVIROMENT } from './config';
 
 export const prisma = new PrismaClient({
   rejectOnNotFound: error => new createHttpError.NotFound(error.message),
+  log: ['query', 'info', 'warn', 'error'],
 });
 
 const app = express();
-const PORT: string = process.env.PORT || '3000';
-const ENVIROMENT = process.env.NODE_ENV || 'development';
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
