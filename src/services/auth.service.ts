@@ -6,11 +6,14 @@ import { prisma } from '../server';
 import sgMail from '@sendgrid/mail';
 import bcrypt from 'bcrypt';
 import { createToken } from '../utils/auth';
+import { sendEmail } from '../utils/email';
 import AuthData from 'src/interfaces/authData.interface';
-import { JWT_EXPIRES } from '../config';
+import { URL_BASE } from '../config';
+import Email from '../interfaces/email.interface';
+import crypto from 'crypto';
 
 export class AuthService {
-  static async signUp(input: CreateUserDto): Promise<AuthData> {
+  static async signUp(input: CreateUserDto): Promise<User> {
     if (await prisma.user.count({ where: { email: input.email } })) {
       throw new createError.UnprocessableEntity('email already taken');
     }
@@ -22,8 +25,20 @@ export class AuthService {
       },
     });
 
-    const token = await createToken(user.id);
-    return Promise.resolve({ user, token });
+    const token = crypto.randomBytes(12).toString('hex');
+    const emailData: Email = {
+      email: user.email,
+      subject: 'Confirm Email',
+      body: `Send this request via POST: ${URL_BASE}/verify-email/${user.uuid}/${token}`,
+    };
+
+    try {
+      await sendEmail(emailData);
+    } catch (error) {
+      console.error(error);
+    }
+
+    return user;
   }
 
   static async signIn(input: SignInUserDto): Promise<AuthData> {

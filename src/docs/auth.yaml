@@ -30,7 +30,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ResponseAuth'
+                $ref: '#/components/schemas/ResponseAccountPublic'
         '404':
           $ref: '#/components/responses/NotFound'
 

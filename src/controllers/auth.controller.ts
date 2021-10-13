@@ -9,15 +9,9 @@ export async function signUp(req: Request, res: Response): Promise<void> {
   const dto = plainToClass(CreateUserDto, req.body);
   await dto.isValid();
 
-  const authData = await AuthService.signUp(dto);
-  const response = {
-    data: {
-      user: plainToClass(UserDto, authData.user),
-      token: authData.token,
-    },
-  };
+  const user = await AuthService.signUp(dto);
 
-  res.status(201).json(response);
+  res.status(201).json({ data: plainToClass(UserDto, user) });
 }
 
 export async function signIn(req: Request, res: Response): Promise<void> {

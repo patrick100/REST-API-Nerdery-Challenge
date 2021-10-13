@@ -1,14 +1,15 @@
 import { SENDGRID_API_KEY, URL_BASE } from '../config';
 import sgMail from '@sendgrid/mail';
+import Email from '../interfaces/email.interface';
 
-sgMail.setApiKey(SENDGRID_API_KEY);
+export const sendEmail = async (emailData: Email) => {
+  sgMail.setApiKey(SENDGRID_API_KEY);
 
-async function sendEmailToken(email: string, subject: string, body: string) {
   const msg = {
-    to: email,
+    to: emailData.email,
     from: 'patricklazo@ravn.co',
-    subject: subject,
-    html: body,
+    subject: emailData.subject,
+    html: emailData.body,
   };
 
   try {
@@ -16,8 +17,7 @@ async function sendEmailToken(email: string, subject: string, body: string) {
   } catch (error) {
     console.error(error);
   }
-}
+};
 
 //const body = `Send this request via POST: ${URL_BASE}/verify-email/${1}/${'sdfsdfsd2314fd'}`;
 //sendEmailToken('patrickdz96@gmail.com', 'Confirm Email', body);
-export default sendEmailToken;
