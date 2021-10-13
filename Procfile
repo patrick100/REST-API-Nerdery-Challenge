@@ -1,1 +1,1 @@
-release: npx prisma db push --preview-feature && npx prisma db seed
+release: npx prisma db push && npx prisma db seed

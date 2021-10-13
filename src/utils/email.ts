@@ -8,7 +8,7 @@ export const sendEmail = async (emailData: Email) => {
   const apiKey = `${process.env.SENDGRID_API_KEY}`;
   console.log('SendGrid key ', apiKey);
 
-  sgMail.setApiKey(apiKey!);
+  sgMail.setApiKey('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');
 
   const msg = {
     to: emailData.email,
