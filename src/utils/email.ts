@@ -1,8 +1,8 @@
-import { SENDGRID_API_KEY, URL_BASE } from '../config';
+import { SENDGRID_API_KEY } from '../config';
 import sgMail from '@sendgrid/mail';
 import Email from '../interfaces/email.interface';
 
-export const sendEmail = async (emailData: Email) => {
+export const sendEmail = async (emailData: Email): Promise<void> => {
   sgMail.setApiKey(SENDGRID_API_KEY);
 
   const msg = {
@@ -12,12 +12,5 @@ export const sendEmail = async (emailData: Email) => {
     html: emailData.body,
   };
 
-  try {
-    await sgMail.send(msg);
-  } catch (error) {
-    console.error(error);
-  }
+  sgMail.send(msg);
 };
-
-//const body = `Send this request via POST: ${URL_BASE}/verify-email/${1}/${'sdfsdfsd2314fd'}`;
-//sendEmailToken('patrickdz96@gmail.com', 'Confirm Email', body);
