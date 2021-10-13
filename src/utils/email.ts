@@ -1,7 +1,7 @@
 import sgMail from '@sendgrid/mail';
 import Email from '../interfaces/email.interface';
 
-export const sendEmail = async (emailData: Email): Promise<void> => {
+export const sendEmail = async (emailData: Email) => {
   sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
 
   const msg = {
@@ -11,5 +11,9 @@ export const sendEmail = async (emailData: Email): Promise<void> => {
     html: emailData.body,
   };
 
-  sgMail.send(msg);
+  try {
+    sgMail.send(msg);
+  } catch (error) {
+    console.error(error);
+  }
 };

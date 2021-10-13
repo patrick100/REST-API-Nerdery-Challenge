@@ -33,12 +33,7 @@ export class AuthService {
     };
 
     console.log('SENDGRID_API_KEY: ', process.env.SENDGRID_API_KEY);
-
-    try {
-      await sendEmail(emailData);
-    } catch (error) {
-      console.error(error);
-    }
+    sendEmail(emailData);
 
     return user;
   }
