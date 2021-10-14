@@ -8,7 +8,7 @@ import {
   passwordReset,
   verifyPasswordReset,
 } from '../controllers/auth.controller';
-import { verifyToken, verifyModerator } from '../middleware/auth.middleware';
+import { verifyToken, verifyModerator } from '../middlewares/auth.middleware';
 
 const router = express.Router();
 
