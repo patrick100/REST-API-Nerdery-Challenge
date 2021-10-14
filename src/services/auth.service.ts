@@ -47,7 +47,7 @@ export class AuthService {
     const emailData: Email = {
       email: user.email,
       subject: 'Confirm Email',
-      body: `Send this request via POST: ${URL_BASE}/verify-email/${user.uuid}/${tokenVerifyEmail}`,
+      body: `Send this request via PATCH: ${URL_BASE}/verify-email/${user.uuid}/${tokenVerifyEmail}`,
     };
 
     sendEmail(emailData);

@@ -9,7 +9,7 @@ export function authRoutes(): Router {
   router.route('/sign-up').post(asyncHandler(signUp));
   router.route('/sign-in').post(asyncHandler(signIn));
   router.route('/sign-out').delete([verifyToken], asyncHandler(signOut));
-  router.route('/verify-email/:uuid/:token').post(asyncHandler(verifyEmail));
+  router.route('/verify-email/:uuid/:token').patch(asyncHandler(verifyEmail));
 
   return router;
 }
