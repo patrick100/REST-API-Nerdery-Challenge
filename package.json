@@ -10,7 +10,9 @@
     "dev": "nodemon",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
+    "prisma:migrate:test": "dotenv -e .env.test --prisma migrate dev --skip-seed",
+    "migrate-test": "npx dotenv -e .env.test -- npx prisma migrate dev --name experimental",
+    "test:coverage": "dotenv -e .env.test -- jest --coverage",
     "build": "tsc",
     "postinstall": "npm run build",
     "start": "node dist/server.js"
