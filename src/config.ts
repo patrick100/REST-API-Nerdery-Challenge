@@ -9,3 +9,5 @@ export const PORT = process.env.PORT || '3000';
 export const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY || '';
 export const JWT_SECRET = process.env.JWT_SECRET || '';
 export const JWT_EXPIRES = process.env.JWT_EXPIRES || '3600';
+
+//process.env.JEST_WORKER_ID !== undefined;
