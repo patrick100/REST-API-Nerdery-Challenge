@@ -21,8 +21,6 @@ export async function create(req: Request, res: Response): Promise<void> {
 }
 
 export async function findOne(req: Request, res: Response): Promise<void> {
-  // console.log('here');
-  // res.status(200).json({ hello: 'me' });
   const user = await UsersService.findOne(req.params.uuid);
 
   res.status(200).json(plainToClass(UserDto, user));

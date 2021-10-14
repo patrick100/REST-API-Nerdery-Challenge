@@ -30,7 +30,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ResponseAuth'
+                $ref: '#/components/schemas/ResponseAccountPublic'
         '404':
           $ref: '#/components/responses/NotFound'
 
@@ -57,8 +57,8 @@ paths:
                 type: string
                 example: mypassword123
       responses:
-        '201':
-          description: 'Created'
+        '200':
+          description: 'OK'
           content:
             application/json:
               schema:
@@ -98,9 +98,11 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/NoContent'
+        '404':
+          $ref: '#/components/responses/NotFound'
 
   /password-reset:
-    patch:
+    post:
       tags:
         - Auth
       summary: Send password reset link
@@ -121,7 +123,7 @@ paths:
           $ref: '#/components/responses/NoContent'
 
   /password-reset/{accountId}/{token}:
-    patch:
+    post:
       tags:
         - Auth
       summary: Reset user password
