@@ -32,7 +32,6 @@ export class AuthService {
       body: `Send this request via POST: ${URL_BASE}/verify-email/${user.uuid}/${token}`,
     };
 
-    console.log('SENDGRID_API_KEY: ', process.env.SENDGRID_API_KEY);
     sendEmail(emailData);
 
     return user;
