@@ -5,6 +5,11 @@ import { SignInUserDto } from '../dtos/users/request/sign-in-user.dto';
 import { UserDto } from '../dtos/users/response/user.dto';
 import { AuthService } from '../services/auth.service';
 
+export async function signOut(req: Request, res: Response): Promise<void> {
+  await AuthService.signOut(req.headers['authorization']!);
+  res.status(204).send();
+}
+
 export async function verifyEmail(req: Request, res: Response): Promise<void> {
   const user = await AuthService.verifyEmail(req.params.uuid, req.params.token);
   res.status(204).send();

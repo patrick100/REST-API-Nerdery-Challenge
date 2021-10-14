@@ -1,9 +1,8 @@
-import { Prisma, User } from '@prisma/client';
+import { User, Token } from '@prisma/client';
 import createError from 'http-errors';
 import { CreateUserDto } from '../dtos/users/request/create-user.dto';
 import { SignInUserDto } from '../dtos/users/request/sign-in-user.dto';
 import { prisma } from '../server';
-import sgMail from '@sendgrid/mail';
 import bcrypt from 'bcrypt';
 import { createToken } from '../utils/auth';
 import { sendEmail } from '../utils/email';
@@ -22,7 +21,7 @@ export class AuthService {
     if (user.tokenVerifyEmail === token) {
       const updateUser = await prisma.user.update({
         where: { uuid: uuid },
-        data: { isEmailVerified: true },
+        data: { isEmailVerified: true, emailVerifiedAt: new Date() },
       });
 
       return updateUser;
@@ -70,5 +69,16 @@ export class AuthService {
     const token = await createToken(user.id);
 
     return { user, token };
+  }
+
+  static async signOut(bearerHeader: string): Promise<void> {
+    const bearer = bearerHeader.split(' ');
+    const bearerToken = bearer[1];
+
+    await prisma.token.delete({
+      where: {
+        token: bearerToken,
+      },
+    });
   }
 }
