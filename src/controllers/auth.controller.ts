@@ -2,16 +2,42 @@ import { plainToClass } from 'class-transformer';
 import { Request, Response } from 'express';
 import { CreateUserDto } from '../dtos/users/request/create-user.dto';
 import { SignInUserDto } from '../dtos/users/request/sign-in-user.dto';
+import { VerifyEmailDto } from '../dtos/users/request/verify-email.dto';
+import { VerifyResetPasswordDto } from '../dtos/users/request/verify-reset-password.dto';
 import { UserDto } from '../dtos/users/response/user.dto';
 import { AuthService } from '../services/auth.service';
 
 export async function signOut(req: Request, res: Response): Promise<void> {
   await AuthService.signOut(req.headers['authorization']!);
+
   res.status(204).send();
 }
 
 export async function verifyEmail(req: Request, res: Response): Promise<void> {
-  const user = await AuthService.verifyEmail(req.params.uuid, req.params.token);
+  const dto = plainToClass(VerifyEmailDto, { uuid: req.params.uuid, token: req.params.token });
+  await dto.isValid();
+
+  await AuthService.verifyEmail(dto);
+
+  res.status(204).send();
+}
+
+export async function passwordReset(req: Request, res: Response): Promise<void> {
+  await AuthService.passwordReset(req.body.email);
+
+  res.status(204).send();
+}
+
+export async function verifyPasswordReset(req: Request, res: Response): Promise<void> {
+  const dto = plainToClass(VerifyResetPasswordDto, {
+    uuid: req.params.uuid,
+    token: req.params.token,
+    password: req.body.password,
+  });
+  await dto.isValid();
+
+  await AuthService.verifyPasswordReset(dto);
+
   res.status(204).send();
 }
 

@@ -98,9 +98,11 @@ paths:
       responses:
         '204':
           $ref: '#/components/responses/NoContent'
+        '404':
+          $ref: '#/components/responses/NotFound'
 
   /password-reset:
-    patch:
+    post:
       tags:
         - Auth
       summary: Send password reset link
@@ -121,7 +123,7 @@ paths:
           $ref: '#/components/responses/NoContent'
 
   /password-reset/{accountId}/{token}:
-    patch:
+    post:
       tags:
         - Auth
       summary: Reset user password
