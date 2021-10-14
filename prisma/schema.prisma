@@ -22,7 +22,9 @@ model User {
   isModerator Boolean @default(false)
   emailVerifiedAt DateTime?
   emailVerified String?
-  temporalEmail String?
+  tokenVerifyEmail  String?
+  tokenChangePassword  String?
+  isEmailVerified Boolean @default(false)
   posts   Post[]
   comments   Comment[]
   reports   Report[]
