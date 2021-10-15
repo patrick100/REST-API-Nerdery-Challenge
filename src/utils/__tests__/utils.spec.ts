@@ -61,16 +61,6 @@ describe('createToken', () => {
 });
 
 describe('sendEmail', () => {
-  it('should not throw a error with a correct email', async () => {
-    const emailData: Email = {
-      email: 'patrickdz96@gmail.com',
-      subject: 'test',
-      body: 'test',
-    };
-
-    await expect(sendEmail(emailData)).resolves.not.toThrow();
-  });
-
   it('should throw a error with a empty email', async () => {
     const emailData: Email = {
       email: '',
@@ -80,10 +70,8 @@ describe('sendEmail', () => {
 
     await expect(sendEmail(emailData)).rejects.toThrowErrorMatchingSnapshot();
   });
-});
 
-describe('sendEmail', () => {
-  it('should not throw a error with a correct email', async () => {
+  /*   it('should not throw a error with a correct email', async () => {
     const emailData: Email = {
       email: 'patrickdz96@gmail.com',
       subject: 'test',
@@ -91,17 +79,7 @@ describe('sendEmail', () => {
     };
 
     await expect(sendEmail(emailData)).resolves.not.toThrow();
-  });
-
-  it('should throw a error with a empty email', async () => {
-    const emailData: Email = {
-      email: '',
-      subject: 'test',
-      body: 'test',
-    };
-
-    await expect(sendEmail(emailData)).rejects.toThrowErrorMatchingSnapshot();
-  });
+  }); */
 });
 
 afterAll(async () => {
