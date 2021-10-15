@@ -31,15 +31,17 @@ export class PostsService {
     });
   }
 
-  static async update(id: number, input: UpdatePostDto): Promise<Post> {
-    const post = await prisma.post.update({
+  static async update(userId: number, id: number, input: UpdatePostDto): Promise<Post> {
+    const currentUser = await prisma.post.findUnique({ where: { id: userId } });
+    const post = await prisma.post.findUnique({ where: { id } });
+    if (currentUser.id !== post.userId) throw new console.error('unauthorized');
+
+    return prisma.post.update({
       data: input,
       where: {
         id,
       },
     });
-
-    return post;
   }
 
   static async delete(accountId: number, id: number): Promise<Post> {
@@ -57,11 +59,10 @@ export class PostsService {
     }
   }
 
-  static async deleteByMod(isMod: boolean, id: number): Promise<Post> {
+  static async deleteByMod(id: number): Promise<Post> {
     const post = await prisma.post.findUnique({ where: { id } });
 
     if (!post) throw new console.error('no post');
-    if (!isMod) throw console.error('unauthorized');
 
     try {
       prisma.post.delete({ where: { id } });
