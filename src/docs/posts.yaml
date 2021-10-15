@@ -38,6 +38,8 @@ paths:
                 type: string
               body:
                 type: string
+              isDraft:
+                type: boolean
       responses:
         '201':
           description: Created
@@ -45,7 +47,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponsePost'
-        '401':
+        '404':
           $ref: '#/components/responses/Unauthorized'
 
   /accounts/{accountId}/posts:
