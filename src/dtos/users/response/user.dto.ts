@@ -15,6 +15,12 @@ export class UserDto {
   readonly email: string;
 
   @Expose()
+  readonly isPublicEmail: boolean;
+
+  @Expose()
+  readonly isPublicName: boolean;
+
+  @Expose()
   @Transform(({ value }) => value?.toISOString())
   readonly createdAt: Date;
 }

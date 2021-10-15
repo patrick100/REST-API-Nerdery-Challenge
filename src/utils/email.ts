@@ -16,5 +16,6 @@ export const sendEmail = async (emailData: Email) => {
     await sgMail.send(msg);
   } catch (error) {
     console.error(error);
+    throw error;
   }
 };

@@ -1,12 +1,14 @@
 import express, { Router } from 'express';
 import asyncHandler from 'express-async-handler';
-import { find, create, findOne, update } from '../controllers/users.controller';
+import { me, findOne, updatePublicInfo } from '../controllers/users.controller';
+import { verifyToken } from '../middlewares/auth.middleware';
 
 const router = express.Router();
 
 export function usersRoutes(): Router {
-  router.route('/').get(asyncHandler(find)).post(asyncHandler(create));
-  router.route('/:uuid').get(asyncHandler(findOne)).patch(asyncHandler(update));
+  router.route('/me').get(verifyToken, asyncHandler(me));
+  router.route('/:uuid').get(asyncHandler(findOne));
+  router.route('/').patch(verifyToken, asyncHandler(updatePublicInfo));
 
   return router;
 }
