@@ -99,7 +99,7 @@ export class AuthService {
 
     if (!user) throw createError(401, 'Wrong credentials provided');
     const isPasswordMatching = await bcrypt.compare(input.password, user.password);
-    //console.log('isPasswordMatching', isPasswordMatching);
+
     if (!isPasswordMatching) throw createError(401, 'Wrong credentials provided');
     const token = await createToken(user.id);
 

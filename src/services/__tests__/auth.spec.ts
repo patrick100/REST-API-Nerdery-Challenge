@@ -86,8 +86,8 @@ describe('signIn', () => {
 
   it('should throw an error if the user password is wrong', async () => {
     const dto = plainToClass(SignInUserDto, {
-      email: 'test@ravn.com',
-      password: 'mypass',
+      email: userCreated.email,
+      password: 'fakepassword',
     });
     dto.isValid();
 
