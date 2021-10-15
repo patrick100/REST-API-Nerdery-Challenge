@@ -3,7 +3,10 @@ import { Exclude, Expose, Transform } from 'class-transformer';
 @Exclude()
 export class PostDto {
   @Expose()
-  uuid: string;
+  id: number;
+
+  @Expose()
+  userId: number;
 
   @Expose()
   title: string;
