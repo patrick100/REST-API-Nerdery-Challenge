@@ -1,4 +1,4 @@
-import { convertToJson, responseApi } from './../utils/serializer';
+import { convertToJson, responseApi, responseApiArray } from './../utils/serializer';
 import { PostsService } from './../services/posts.service';
 import { plainToClass } from 'class-transformer';
 import { Request, Response } from 'express';
@@ -9,8 +9,9 @@ import { UpdatePostDto } from './../dtos/posts/request/update-post.dto';
 
 export async function find(req: Request, res: Response): Promise<void> {
   const posts = await PostsService.find();
+  const jsonResponse = convertToJson(plainToClass(PostDto, posts));
 
-  res.status(200).json(plainToClass(PostDto, posts));
+  res.status(200).json(responseApiArray(jsonResponse));
 }
 
 export async function create(request: Request, res: Response): Promise<void> {
@@ -25,21 +26,24 @@ export async function create(request: Request, res: Response): Promise<void> {
 
 export async function findOne(req: Request, res: Response): Promise<void> {
   const post = await PostsService.findOne(+req.params.id);
+  const jsonResponse = convertToJson(plainToClass(PostDto, post));
 
-  res.status(200).json(plainToClass(PostDto, post));
+  res.status(200).json(responseApi(jsonResponse));
 }
 
 export async function findMyPosts(request: Request, res: Response): Promise<void> {
   const req = request as RequestWithUserId;
   const posts = await PostsService.findUserPosts(req.userId);
+  const jsonResponse = convertToJson(plainToClass(PostDto, posts));
 
-  res.status(200).json(plainToClass(PostDto, posts));
+  res.status(200).json(responseApiArray(jsonResponse));
 }
 
 export async function findUserPosts(req: Request, res: Response): Promise<void> {
   const posts = await PostsService.findUserPosts(+req.params.accountId);
+  const jsonResponse = convertToJson(plainToClass(PostDto, posts));
 
-  res.status(200).json(plainToClass(PostDto, posts));
+  res.status(200).json(responseApiArray(jsonResponse));
 }
 
 export async function update(request: Request, res: Response): Promise<void> {
@@ -56,8 +60,9 @@ export async function update(request: Request, res: Response): Promise<void> {
 export async function deleteMyPost(request: Request, res: Response): Promise<void> {
   const req = request as RequestWithUserId;
   const deletedPost = await PostsService.delete(req.userId, +req.params.id);
+  const jsonResponse = convertToJson(plainToClass(PostDto, deletedPost));
 
-  res.status(200).json(plainToClass(PostDto, deletedPost));
+  res.status(200).json(responseApi(jsonResponse));
 }
 
 export async function deletePostByMod(req: Request, res: Response): Promise<void> {

@@ -21,6 +21,9 @@ export class PostDto {
   dislikes: number;
 
   @Expose()
-  @Transform(value => value.toString())
+  isDraft: boolean;
+
+  @Expose()
+  @Transform(({ value }) => value?.toString())
   readonly createdAt: Date;
 }

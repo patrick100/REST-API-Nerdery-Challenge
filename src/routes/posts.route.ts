@@ -20,7 +20,9 @@ export function postsRoutes(): Router {
   router.route('/accounts/me/posts').get(verifyToken, asyncHandler(findMyPosts));
   router.route('/accounts/:accountId/posts').get(asyncHandler(findUserPosts));
   router.route('/accounts/me/posts/:id').delete(verifyToken, asyncHandler(deleteMyPost));
-  router.route('/accounts/:accountId/posts/:id').delete(asyncHandler(deletePostByMod));
+  router
+    .route('/accounts/:accountId/posts/:id')
+    .delete([verifyToken, verifyModerator], asyncHandler(deletePostByMod));
 
   return router;
 }

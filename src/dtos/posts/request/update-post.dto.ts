@@ -28,4 +28,8 @@ export class UpdatePostDto extends BaseDto {
   @Expose()
   @IsOptional()
   readonly dislikes: number;
+
+  @Expose()
+  @IsOptional()
+  readonly isDraft: boolean;
 }

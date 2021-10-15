@@ -51,9 +51,9 @@ export class PostsService {
     if (post.userId !== accountId) throw console.error('unauthorized');
 
     try {
-      prisma.post.delete({ where: { id } });
+      const deletedPost = await prisma.post.delete({ where: { id } });
 
-      return post;
+      return deletedPost;
     } catch (error) {
       throw error;
     }
