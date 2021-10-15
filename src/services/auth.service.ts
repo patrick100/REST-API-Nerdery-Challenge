@@ -62,7 +62,7 @@ export class AuthService {
         data: { password: hashedPassword },
       });
     } else {
-      throw createError(401, 'Wrong credentials provided 2');
+      throw createError(401, 'Wrong credentials provided');
     }
   }
 
