@@ -1,9 +1,9 @@
 import { User } from '@prisma/client';
 import createError from 'http-errors';
 import { CreateUserDto } from '../dtos/users/request/create-user.dto';
-import { SignInUserDto } from '../dtos/users/request/sign-in-user.dto';
-import { VerifyEmailDto } from '../dtos/auths/request/verify-email.dto';
-import { VerifyResetPasswordDto } from '../dtos/auths/request/verify-reset-password.dto';
+import { SignInUserDto } from '../dtos/auth/request/sign-in-user.dto';
+import { VerifyEmailDto } from '../dtos/auth/request/verify-email.dto';
+import { VerifyResetPasswordDto } from '../dtos/auth/request/verify-reset-password.dto';
 import { prisma } from '../server';
 import bcrypt from 'bcrypt';
 import { createToken } from '../utils/auth';
@@ -98,8 +98,8 @@ export class AuthService {
     });
 
     if (!user) throw createError(401, 'Wrong credentials provided');
-    const isPasswordMatching = bcrypt.compare(input.password, user.password);
-
+    const isPasswordMatching = await bcrypt.compare(input.password, user.password);
+    //console.log('isPasswordMatching', isPasswordMatching);
     if (!isPasswordMatching) throw createError(401, 'Wrong credentials provided');
     const token = await createToken(user.id);
 

@@ -1,9 +1,9 @@
 import { plainToClass } from 'class-transformer';
 import { Request, Response } from 'express';
 import { CreateUserDto } from '../dtos/users/request/create-user.dto';
-import { SignInUserDto } from '../dtos/users/request/sign-in-user.dto';
-import { VerifyEmailDto } from '../dtos/auths/request/verify-email.dto';
-import { VerifyResetPasswordDto } from '../dtos/auths/request/verify-reset-password.dto';
+import { SignInUserDto } from '../dtos/auth/request/sign-in-user.dto';
+import { VerifyEmailDto } from '../dtos/auth/request/verify-email.dto';
+import { VerifyResetPasswordDto } from '../dtos/auth/request/verify-reset-password.dto';
 import { UserDto } from '../dtos/users/response/user.dto';
 import { AuthService } from '../services/auth.service';
 
