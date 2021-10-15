@@ -61,7 +61,7 @@ describe('createToken', () => {
 });
 
 describe('sendEmail', () => {
-  it('should throw a error with a empty email', async () => {
+  /*   it('should throw a error with a empty email', async () => {
     const emailData: Email = {
       email: '',
       subject: 'test',
@@ -69,8 +69,7 @@ describe('sendEmail', () => {
     };
 
     await expect(sendEmail(emailData)).rejects.toThrowErrorMatchingSnapshot();
-  });
-
+  }); */
   /*   it('should not throw a error with a correct email', async () => {
     const emailData: Email = {
       email: 'patrickdz96@gmail.com',
