@@ -7,7 +7,6 @@ import { VerifyResetPasswordDto } from '../../dtos/auth/request/verify-reset-pas
 import { plainToClass } from 'class-transformer';
 import { server } from '../../server';
 import bcrypt from 'bcrypt';
-import { createToken } from '../../utils/auth';
 
 let userCreated: User;
 let passwordUserCreated: string;
