@@ -17,8 +17,8 @@ export function authRoutes(): Router {
   router.route('/sign-in').post(asyncHandler(signIn));
   router.route('/sign-out').delete([verifyToken], asyncHandler(signOut));
   router.route('/verify-email/:uuid/:token').patch(asyncHandler(verifyEmail));
-  router.route('/password-reset').post(asyncHandler(passwordReset));
-  router.route('/password-reset/:uuid/:token').post(asyncHandler(verifyPasswordReset));
+  router.route('/password-reset').patch(asyncHandler(passwordReset));
+  router.route('/password-reset/:uuid/:token').patch(asyncHandler(verifyPasswordReset));
 
   return router;
 }

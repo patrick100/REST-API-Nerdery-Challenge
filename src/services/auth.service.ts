@@ -23,7 +23,7 @@ export class AuthService {
     const emailData: Email = {
       email: user.email,
       subject: 'Reset Password',
-      body: `Send this request via POST: ${URL_BASE}/password-reset/${user.uuid}/${tokenResetPassword} 
+      body: `Send this request via PATCH: ${URL_BASE}/password-reset/${user.uuid}/${tokenResetPassword} 
       with the password in the body example: {password:newpassword}`,
     };
 
@@ -62,7 +62,7 @@ export class AuthService {
         data: { password: hashedPassword },
       });
     } else {
-      throw createError(401, 'Wrong credentials provided');
+      throw createError(401, 'Wrong credentials provided 2');
     }
   }
 
