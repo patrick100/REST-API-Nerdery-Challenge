@@ -3,3 +3,5 @@ dist
 coverage
 .env
 prisma/migrations
+/src/services/*/__snapshots__/
+/src/utils/*/__snapshots__/

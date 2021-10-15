@@ -1,11 +1,12 @@
-import { plainToClass } from 'class-transformer';
+import { classToPlain, plainToClass, serialize } from 'class-transformer';
 import { Request, Response } from 'express';
 import { CreateUserDto } from '../dtos/users/request/create-user.dto';
-import { SignInUserDto } from '../dtos/users/request/sign-in-user.dto';
-import { VerifyEmailDto } from '../dtos/auths/request/verify-email.dto';
-import { VerifyResetPasswordDto } from '../dtos/auths/request/verify-reset-password.dto';
+import { SignInUserDto } from '../dtos/auth/request/sign-in-user.dto';
+import { VerifyEmailDto } from '../dtos/auth/request/verify-email.dto';
+import { VerifyResetPasswordDto } from '../dtos/auth/request/verify-reset-password.dto';
 import { UserDto } from '../dtos/users/response/user.dto';
 import { AuthService } from '../services/auth.service';
+import { convertToJson, responseApi, responseApiAuth } from '../utils/serializer';
 
 export async function signOut(req: Request, res: Response): Promise<void> {
   await AuthService.signOut(req.headers['authorization']!);
@@ -46,8 +47,9 @@ export async function signUp(req: Request, res: Response): Promise<void> {
   await dto.isValid();
 
   const user = await AuthService.signUp(dto);
+  const userJson = convertToJson(plainToClass(UserDto, user));
 
-  res.status(201).json({ data: plainToClass(UserDto, user) });
+  res.status(201).json(responseApi(userJson));
 }
 
 export async function signIn(req: Request, res: Response): Promise<void> {
@@ -55,12 +57,7 @@ export async function signIn(req: Request, res: Response): Promise<void> {
   await dto.isValid();
 
   const authData = await AuthService.signIn(dto);
-  const response = {
-    data: {
-      user: plainToClass(UserDto, authData.user),
-      token: authData.token,
-    },
-  };
+  const userJson = convertToJson(plainToClass(UserDto, authData.user));
 
-  res.status(200).json(response);
+  res.status(200).json(responseApiAuth(authData.token, userJson));
 }

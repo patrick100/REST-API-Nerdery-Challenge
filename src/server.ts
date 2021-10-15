@@ -53,6 +53,8 @@ app.use(cors(corsOptionsDelegate));
 app.use('/', router(app));
 app.use(errorHandler);
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
+
+export { server };
