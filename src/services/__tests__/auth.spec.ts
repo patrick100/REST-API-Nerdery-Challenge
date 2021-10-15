@@ -3,16 +3,23 @@ import { PrismaClient, User } from '@prisma/client';
 import { CreateUserDto } from '../../dtos/users/request/create-user.dto';
 import { SignInUserDto } from '../../dtos/auth/request/sign-in-user.dto';
 import { VerifyEmailDto } from '../../dtos/auth/request/verify-email.dto';
+import { VerifyResetPasswordDto } from '../../dtos/auth/request/verify-reset-password.dto';
 import { plainToClass } from 'class-transformer';
 import { server } from '../../server';
 import bcrypt from 'bcrypt';
+import { createToken } from '../../utils/auth';
 
 let userCreated: User;
 let passwordUserCreated: string;
 const prisma = new PrismaClient();
+const fakeEmail = 'fake_email@ravn.co';
+const fakeUuid = 'fake_uuid';
+const fakeToken = 'fake_token';
+const fakePassword = 'fake_password';
+const password = 'password123';
+const correctTokenAuth = 'correctTokenAuth';
 
 beforeAll(async () => {
-  const password = 'password123';
   const hashedPassword = await bcrypt.hash(password, 10);
   const user = await prisma.user.create({
     data: {
@@ -21,6 +28,15 @@ beforeAll(async () => {
       email: 'test@ravn.com',
       password: hashedPassword,
       tokenVerifyEmail: 'correctTokenEmail',
+      tokenChangePassword: 'correctTokenPassword',
+      tokens: {
+        create: [
+          {
+            token: correctTokenAuth,
+            tokenExpiresAt: new Date(new Date().getTime() + 3600 * 1000),
+          },
+        ],
+      },
     },
   });
   passwordUserCreated = password;
@@ -43,10 +59,10 @@ describe('signUp', () => {
     const dto = plainToClass(CreateUserDto, {
       firstName: 'test',
       lastName: 'test',
-      email: 'test@ravn.com',
+      email: userCreated.email,
       password: 'password123',
     });
-    dto.isValid();
+    await dto.isValid();
 
     await expect(AuthService.signUp(dto)).rejects.toThrowErrorMatchingSnapshot();
   });
@@ -58,7 +74,7 @@ describe('signUp', () => {
       email: 'newtest@ravn.com',
       password: 'newpassword123',
     });
-    dto.isValid();
+    await dto.isValid();
 
     await expect(AuthService.signUp(dto)).resolves.not.toThrow();
   });
@@ -79,7 +95,7 @@ describe('signIn', () => {
       email: 'test2@ravn.com',
       password: 'password123',
     });
-    dto.isValid();
+    await dto.isValid();
 
     await expect(AuthService.signIn(dto)).rejects.toThrowErrorMatchingSnapshot();
   });
@@ -87,9 +103,9 @@ describe('signIn', () => {
   it('should throw an error if the user password is wrong', async () => {
     const dto = plainToClass(SignInUserDto, {
       email: userCreated.email,
-      password: 'fakepassword',
+      password: fakeEmail,
     });
-    dto.isValid();
+    await dto.isValid();
 
     await expect(AuthService.signIn(dto)).rejects.toThrowErrorMatchingSnapshot();
   });
@@ -99,7 +115,7 @@ describe('signIn', () => {
       email: userCreated.email,
       password: passwordUserCreated,
     });
-    dto.isValid();
+    await dto.isValid();
 
     await expect(AuthService.signIn(dto)).resolves.not.toThrow();
   });
@@ -108,10 +124,10 @@ describe('signIn', () => {
 describe('verifyEmail', () => {
   it('should throw an error with wrong credentials', async () => {
     const dto = plainToClass(VerifyEmailDto, {
-      uuid: 'fake_uuid',
-      token: 'fake_token',
+      uuid: fakeUuid,
+      token: fakeToken,
     });
-    dto.isValid();
+    await dto.isValid();
 
     await expect(AuthService.verifyEmail(dto)).rejects.toThrowErrorMatchingSnapshot();
   });
@@ -121,7 +137,7 @@ describe('verifyEmail', () => {
       uuid: userCreated.uuid,
       token: 'fake_token',
     });
-    dto.isValid();
+    await dto.isValid();
 
     await expect(AuthService.verifyEmail(dto)).rejects.toThrowErrorMatchingSnapshot();
   });
@@ -131,9 +147,50 @@ describe('verifyEmail', () => {
       uuid: userCreated.uuid,
       token: userCreated.tokenVerifyEmail,
     });
-    dto.isValid();
+    await dto.isValid();
 
     await expect(AuthService.verifyEmail(dto)).resolves.not.toThrow();
+  });
+});
+
+describe('verifyPasswordReset', () => {
+  it('should throw an error with wrong credentials', async () => {
+    const dto = plainToClass(VerifyResetPasswordDto, {
+      uuid: fakeUuid,
+      token: fakeToken,
+      password: fakePassword,
+    });
+    await dto.isValid();
+
+    await expect(AuthService.verifyPasswordReset(dto)).rejects.toThrowErrorMatchingSnapshot();
+  });
+
+  it('should not throw an error with the correct credentials', async () => {
+    console.log('mydfd', userCreated.tokenChangePassword);
+    const dto = plainToClass(VerifyResetPasswordDto, {
+      uuid: userCreated.uuid,
+      token: userCreated.tokenChangePassword,
+      password: 'new_password',
+    });
+    await dto.isValid();
+
+    await expect(AuthService.verifyPasswordReset(dto)).resolves.not.toThrow();
+  });
+});
+
+describe('passwordReset', () => {
+  it('it should throw an error with a wrong email', async () => {
+    await expect(AuthService.passwordReset(fakeEmail)).rejects.toThrowErrorMatchingSnapshot();
+  });
+
+  it('it should not throw an error with a correct email', async () => {
+    await expect(AuthService.passwordReset(userCreated.email)).resolves.not.toThrow();
+  });
+});
+
+describe('signOut', () => {
+  it('it should not throw an error with a correct bearer token', async () => {
+    await expect(AuthService.signOut(`bearer ${correctTokenAuth}`)).resolves.not.toThrow();
   });
 });
 
