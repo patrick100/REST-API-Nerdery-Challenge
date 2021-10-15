@@ -8,5 +8,3 @@ export const URL_BASE = process.env.NODE_ENV === 'development' ? development : p
 export const PORT = process.env.PORT || '3000';
 export const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY || '';
 export const JWT_SECRET = process.env.JWT_SECRET || '';
-export const JWT_EXPIRES = process.env.JWT_EXPIRES || '3600';
-export const DATABASE_TEST_URL = process.env.DATABASE_TEST_URL;

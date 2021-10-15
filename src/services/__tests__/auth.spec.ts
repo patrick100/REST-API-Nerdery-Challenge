@@ -1,16 +1,13 @@
-//import { SignUp } from '../auth.service';
+import { AuthService } from '../auth.service';
 import { PrismaClient, User } from '@prisma/client';
-import { DATABASE_TEST_URL } from '../../config';
-
-test('Testing time!', () => {
-  console.log('welcome');
-});
+import { CreateUserDto } from '../../dtos/users/request/create-user.dto';
+import { plainToClass } from 'class-transformer';
+import { server } from '../../server';
 
 let userCreated: User;
+const prisma = new PrismaClient();
 
 beforeAll(async () => {
-  const prisma = new PrismaClient();
-
   const user = await prisma.user.create({
     data: {
       firstName: 'test',
@@ -25,15 +22,20 @@ beforeAll(async () => {
 
 describe('SignUp', () => {
   it('should throw an error if the email is already taken', async () => {
-    /* const userData: CreateUserDto = {
-      name: 'John Smith',
-      email: 'john@smith.com',
-      password: 'strongPassword123',
-    }; */
-    //const authenticationService = new AuthenticationService();
-    //authenticationService.user.findOne = jest.fn().mockReturnValue(Promise.resolve(userData));
-    //await expect(authenticationService.register(userData)).rejects.toMatchObject(
-    //  new UserWithThatEmailAlreadyExistsException(userData.email)
-    //);
+    const userData = {
+      firstName: 'test',
+      lastName: 'test',
+      email: 'test@ravn.com',
+      password: 'password123',
+    };
+
+    const dto = plainToClass(CreateUserDto, userData);
+    await expect(AuthService.signUp(dto)).rejects.toThrowErrorMatchingSnapshot();
   });
+});
+
+afterAll(async () => {
+  await prisma.user.delete({ where: { email: 'test@ravn.com' } });
+  await prisma.$disconnect();
+  server.close();
 });

@@ -1,4 +1,4 @@
-import { JWT_SECRET, JWT_EXPIRES } from '../config';
+import { JWT_SECRET } from '../config';
 import { prisma } from '../server';
 import jwt from 'jsonwebtoken';
 
