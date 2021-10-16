@@ -3,13 +3,13 @@ import { Exclude, Expose, Transform } from 'class-transformer';
 @Exclude()
 export class CommentDto {
   @Expose()
-  uuid: string;
+  id: number;
 
   @Expose()
-  userId: string;
+  title: string;
 
   @Expose()
-  comment: string;
+  body: string;
 
   @Expose()
   likes: number;
@@ -18,6 +18,9 @@ export class CommentDto {
   dislikes: number;
 
   @Expose()
-  @Transform(value => value.toString())
+  isDraft: boolean;
+
+  @Expose()
+  @Transform(({ value }) => value.toString())
   readonly createdAt: Date;
 }
