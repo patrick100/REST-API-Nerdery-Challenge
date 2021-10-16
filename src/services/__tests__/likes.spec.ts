@@ -104,6 +104,18 @@ describe('giveLike', () => {
 
     await expect(LikesService.giveLike(dto)).resolves.not.toThrow();
   });
+
+  it('should not throw an error if like a comment with the correct parameters', async () => {
+    const dto = plainToClass(CreateLikeDto, {
+      userId: userCreated2.id,
+      type: 'COMMENT',
+      resourceId: commentCreated.id,
+      isLike: true,
+    });
+    await dto.isValid();
+
+    await expect(LikesService.giveLike(dto)).resolves.not.toThrow();
+  });
 });
 
 describe('removeLike', () => {
