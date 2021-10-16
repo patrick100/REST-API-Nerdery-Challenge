@@ -13,7 +13,7 @@ export function router(app: Router): Router {
   app.use('/api/v1', postsRoutes());
   app.use('/api/v1', commentsRoutes());
   app.use('/api/v1/accounts', usersRoutes());
-  app.use('/', authRoutes());
+  app.use('/api/v1', authRoutes());
   app.use('/api/v1', likesRoutes());
   app.use('/api/v1', reportsRoutes());
   app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec));

@@ -8,7 +8,7 @@ export async function giveLikePost(expressRequest: Request, res: Response): Prom
   const req = expressRequest as RequestWithUserId;
   const dto = plainToClass(CreateLikeDto, {
     isLike: req.body.isLike,
-    resourceId: Number(req.params.postId),
+    resourceId: +req.params.postId,
     userId: req.userId,
     type: 'POST',
   });
@@ -22,7 +22,7 @@ export async function giveLikeComment(expressRequest: Request, res: Response): P
   const req = expressRequest as RequestWithUserId;
   const dto = plainToClass(CreateLikeDto, {
     isLike: req.body.isLike,
-    resourceId: Number(req.params.commentId),
+    resourceId: +req.params.commentId,
     userId: req.userId,
     type: 'COMMENT',
   });
@@ -36,7 +36,7 @@ export async function removeLikePost(expressRequest: Request, res: Response): Pr
   const req = expressRequest as RequestWithUserId;
   const dto = plainToClass(CreateLikeDto, {
     isLike: req.body.isLike,
-    resourceId: Number(req.params.postId),
+    resourceId: +req.params.postId,
     userId: req.userId,
     type: 'POST',
   });
@@ -50,7 +50,7 @@ export async function removeLikeComment(expressRequest: Request, res: Response):
   const req = expressRequest as RequestWithUserId;
   const dto = plainToClass(CreateLikeDto, {
     isLike: req.body.isLike,
-    resourceId: Number(req.params.commentId),
+    resourceId: +req.params.commentId,
     userId: req.userId,
     type: 'COMMENT',
   });
