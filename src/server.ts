@@ -9,7 +9,7 @@ import { PORT, ENVIROMENT } from './config';
 
 export const prisma = new PrismaClient({
   rejectOnNotFound: error => new createHttpError.NotFound(error.message),
-  log: ['error'],
+  //log: ['error'],
 });
 
 const app = express();
@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
-const whiteList = ['http://localhost:3000'];
+const whiteList = ['http://localhost:3000', 'https://blog-api-challenge-ravn.herokuapp.com'];
 const corsOptionsDelegate = function handler(
   req: Request,
   callback: (err: Error | null, options?: CorsOptions) => void

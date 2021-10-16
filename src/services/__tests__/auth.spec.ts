@@ -165,7 +165,6 @@ describe('verifyPasswordReset', () => {
   });
 
   it('should not throw an error with the correct credentials', async () => {
-    console.log('mydfd', userCreated.tokenChangePassword);
     const dto = plainToClass(VerifyResetPasswordDto, {
       uuid: userCreated.uuid,
       token: userCreated.tokenChangePassword,

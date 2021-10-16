@@ -1,4 +1,4 @@
-import { classToPlain, plainToClass, serialize } from 'class-transformer';
+import { plainToClass } from 'class-transformer';
 import { Request, Response } from 'express';
 import { CreateUserDto } from '../dtos/users/request/create-user.dto';
 import { SignInUserDto } from '../dtos/auth/request/sign-in-user.dto';

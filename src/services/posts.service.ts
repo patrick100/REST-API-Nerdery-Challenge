@@ -66,9 +66,9 @@ export class PostsService {
     if (!post) throw new createError.NotFound(`Post ${id} not Found`);
 
     try {
-      prisma.post.delete({ where: { id } });
+      const deletedPost = await prisma.post.delete({ where: { id } });
 
-      return post;
+      return deletedPost;
     } catch (error) {
       throw error;
     }
