@@ -1,4 +1,4 @@
-import { PrismaClient, User } from '@prisma/client';
+import { PrismaClient, User, Post } from '@prisma/client';
 import { plainToClass } from 'class-transformer';
 import { server } from '../../server';
 import { UsersService } from '../users.service';
@@ -11,29 +11,40 @@ import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
-let user: User;
-const initialUser = {
-  id: 1,
-  uuid: '33e6042c-b9c5-4cfa-90c5-f688641f104e',
-  firstName: 'test',
-  lastName: 'test',
-  email: 'test@ravn.com',
-};
+const password = 'password123';
+let userCreated1: User;
+let userCreated2: User;
+let postCreated: Post;
 
 beforeAll(async () => {
-  await prisma.post.deleteMany();
-  await prisma.user.deleteMany();
-  const hashedPassword = await bcrypt.hash('password', 10);
-  user = await prisma.user.create({
+  const hashedPassword = await bcrypt.hash(password, 10);
+  userCreated1 = await prisma.user.create({
     data: {
-      ...initialUser,
+      firstName: 'userCreator ',
+      lastName: 'userCreator',
+      email: 'creator@ravn.com',
       password: hashedPassword,
     },
   });
-});
 
-beforeEach(async () => {
-  await prisma.post.deleteMany({});
+  postCreated = await prisma.post.create({
+    data: {
+      title: 'post test',
+      body: 'post test',
+      userId: userCreated1.id,
+    },
+  });
+
+  console.log(postCreated);
+
+  userCreated2 = await prisma.user.create({
+    data: {
+      firstName: 'test',
+      lastName: 'test',
+      email: 'test@ravn.com',
+      password: hashedPassword,
+    },
+  });
 });
 
 describe('create', () => {
@@ -43,7 +54,7 @@ describe('create', () => {
   };
 
   it('should create a new post', async () => {
-    const result = await PostsService.create(user.id, plainToClass(CreatePostDto, newPost));
+    const result = await PostsService.create(userCreated1.id, plainToClass(CreatePostDto, newPost));
 
     expect(result).toBeDefined();
     expect(result.title).toBe(newPost.title);
@@ -51,7 +62,7 @@ describe('create', () => {
   });
 
   it('should not have empty properties', async () => {
-    const result = await PostsService.create(user.id, plainToClass(CreatePostDto, newPost));
+    const result = await PostsService.create(userCreated1.id, plainToClass(CreatePostDto, newPost));
 
     expect(result.title).not.toBe('');
     expect(result.body).not.toBe('');
@@ -59,19 +70,14 @@ describe('create', () => {
 });
 
 describe('find', () => {
-  let post: PostDto;
-
-  beforeAll(async () => {
-    post = await PostsService.create(
-      user.id,
+  it('should find a post by id', async () => {
+    const post = await PostsService.create(
+      userCreated1.id,
       plainToClass(CreatePostDto, {
         title: 'test',
         body: 'test',
       })
     );
-  });
-
-  it('should find a post by id', async () => {
     const result = await PostsService.findOne(post.id);
 
     expect(result).toBeDefined();
@@ -80,33 +86,35 @@ describe('find', () => {
   });
 });
 
-// describe('update', () => {
-//   it('should update a post', async () => {
-//     const post = await PostsService.create(
-//       user.id,
-//       plainToClass(CreatePostDto, {
-//         title: 'test',
-//         body: 'test',
-//       })
-//     );
+describe('update', () => {
+  it('should update a post', async () => {
+    const result = await PostsService.update(
+      userCreated1.id,
+      postCreated.id,
+      plainToClass(UpdatePostDto, {
+        title: 'test update',
+        body: 'test update',
+      })
+    );
 
-//     const result = await PostsService.update(
-//       user.id,
-//       post.id,
-//       plainToClass(UpdatePostDto, {
-//         title: 'test2',
-//         body: 'test2',
-//       })
-//     );
+    expect(result.title).toMatch('test update');
+    expect(result.body).toBe('test update');
+  });
 
-//     // expect(post).toBeDefined();
-//     expect(result.id).toBe(post.id.);
+  it('should not have empty properties', async () => {
+    const result = await PostsService.update(
+      userCreated1.id,
+      postCreated.id,
+      plainToClass(UpdatePostDto, {
+        title: 'test update',
+        body: 'test update',
+      })
+    );
 
-//     // expect(result).toBeDefined();
-//     // expect(result.title).toBe('test2');
-//     // expect(result.body).toBe('test2');
-//   });
-// });
+    expect(result.title).not.toBe('');
+    expect(result.body).not.toBe('');
+  });
+});
 
 afterAll(async () => {
   await prisma.post.deleteMany({});
