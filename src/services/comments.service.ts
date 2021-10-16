@@ -16,7 +16,6 @@ export class CommentsService {
       throw new createError.NotFound(`Post ${id} not Found`);
     }
 
-    console.log(id);
     return prisma.comment.findMany({
       where: {
         postId: id,
@@ -105,7 +104,7 @@ export class CommentsService {
     }
   }
 
-  static async deleteByMod(userId: number, id: number): Promise<Comment> {
+  static async deleteByMod(id: number): Promise<Comment> {
     const comment = await prisma.comment.findUnique({
       where: {
         id,

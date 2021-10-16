@@ -45,5 +45,8 @@ export async function deleteComment(request: Request, res: Response): Promise<vo
 }
 
 export async function deleteCommentByMod(req: Request, res: Response): Promise<void> {
-  console.log('delete comment');
+  const deletedComment = await CommentsService.deleteByMod(+req.params.id);
+  const jsonResponse = convertToJson(plainToClass(CommentDto, deletedComment));
+
+  res.status(200).json(responseApi(jsonResponse));
 }
