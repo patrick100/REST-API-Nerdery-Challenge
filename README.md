@@ -3,7 +3,6 @@
 # Api Blog
 
 > This project is a challenge to create a REST-API using Express and Prisma ORM.
-> ![screenshot](app/assets/images/mockup.jpg)
 
 ## :red_circle: Live Demo:
 
