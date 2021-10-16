@@ -1,15 +1,26 @@
+import { verifyToken, verifyModerator } from './../middlewares/auth.middleware';
 import express, { Router } from 'express';
-import expressAsyncHandler from 'express-async-handler';
-import { find, create, update, deleteComment } from '../controllers/comments.controller';
+import asyncHandler from 'express-async-handler';
+import {
+  find,
+  create,
+  update,
+  deleteComment,
+  deleteCommentByMod,
+} from '../controllers/comments.controller';
 
 const router = express.Router();
 
 export function commentsRoutes(): Router {
-  router.route('/posts/:postuuid/comments').get(find);
-  router.route('/posts/:postuuid/comments').post(create);
-  router.route('/posts/:postuuid/comments/:uuid').patch(update);
-  router.route('/accounts/me/posts/:postuuid/comments/:uuid').delete(deleteComment);
-  router.route('/accounts/:accountuuid/posts/:postuuid/comments/:uuid').delete(deleteComment);
+  router.route('/posts/:postId/comments').get(asyncHandler(find));
+  router.route('/posts/:postId/comments').post(verifyToken, asyncHandler(create));
+  router.route('/posts/:postId/comments/:id').patch(verifyToken, asyncHandler(update));
+  router
+    .route('/accounts/me/posts/:postId/comments/:id')
+    .delete(verifyToken, asyncHandler(deleteComment));
+  router
+    .route('/accounts/:accountuuid/posts/:postuuid/comments/:uuid')
+    .delete([verifyToken, verifyModerator], asyncHandler(deleteCommentByMod));
 
   return router;
 }
