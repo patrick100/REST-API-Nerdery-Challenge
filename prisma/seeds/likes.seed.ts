@@ -9,10 +9,10 @@ const likes: Prisma.LikeCreateInput[] = [
     type: 'POST',
   },
   {
-    isLike: false,
+    isLike: true,
     user: { connect: { id: 1 } },
     resourceId: 4,
-    type: 'COMMENT',
+    type: 'POST',
   },
   {
     isLike: false,
@@ -27,10 +27,10 @@ const likes: Prisma.LikeCreateInput[] = [
     type: 'COMMENT',
   },
   {
-    isLike: true,
+    isLike: false,
     user: { connect: { id: 1 } },
-    resourceId: 2,
-    type: 'POST',
+    resourceId: 4,
+    type: 'COMMENT',
   },
   {
     isLike: true,
@@ -45,6 +45,32 @@ const likesSeed = async () => {
     await prisma.like.create({
       data: like,
     });
+    //update field likes
+    if (like.type === 'COMMENT') {
+      if (like.isLike) {
+        await prisma.comment.update({
+          where: { id: like.resourceId },
+          data: { likes: { increment: 1 } },
+        });
+      } else {
+        await prisma.comment.update({
+          where: { id: like.resourceId },
+          data: { dislikes: { increment: 1 } },
+        });
+      }
+    } else {
+      if (like.isLike) {
+        await prisma.post.update({
+          where: { id: like.resourceId },
+          data: { likes: { increment: 1 } },
+        });
+      } else {
+        await prisma.post.update({
+          where: { id: like.resourceId },
+          data: { dislikes: { increment: 1 } },
+        });
+      }
+    }
   }
 };
 
