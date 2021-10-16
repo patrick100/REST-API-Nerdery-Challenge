@@ -1,12 +1,9 @@
 import { PrismaClient, User, Post } from '@prisma/client';
 import { plainToClass } from 'class-transformer';
 import { server } from '../../server';
-import { UsersService } from '../users.service';
 import { PostsService } from './../../services/posts.service';
-import { PostDto } from '../../dtos/posts/response/post.dto';
 import { CreatePostDto } from '../../dtos/posts/request/create-post.dto';
 import { UpdatePostDto } from '../../dtos/posts/request/update-post.dto';
-import { CreateUserDto } from '../../dtos/users/request/create-user.dto';
 import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
@@ -34,8 +31,6 @@ beforeAll(async () => {
       userId: userCreated1.id,
     },
   });
-
-  console.log(postCreated);
 
   userCreated2 = await prisma.user.create({
     data: {
