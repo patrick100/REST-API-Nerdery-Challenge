@@ -1,0 +1,95 @@
+{
+	"info": {
+		"_postman_id": "4121c838-79ce-4cb6-8641-5ec74ca0d290",
+		"name": "Reports",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Report a post",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjM0NTczMjY0LCJleHAiOjE2MzQ1NzY4NjR9.iDAoG_pJgVyXIt7KDajtJJOPePmLyNLC913AjFM1sDg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"title report\",\r\n    \"description\": \"description report\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/posts/1/comments/1/reports",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"posts",
+						"1",
+						"comments",
+						"1",
+						"reports"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Report a comment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjM0NTczMjY0LCJleHAiOjE2MzQ1NzY4NjR9.iDAoG_pJgVyXIt7KDajtJJOPePmLyNLC913AjFM1sDg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"title report\",\r\n    \"description\": \"description report\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/posts/1/reports",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"posts",
+						"1",
+						"reports"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
