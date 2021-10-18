@@ -1,0 +1,210 @@
+{
+	"info": {
+		"_postman_id": "bf7b042e-7850-4400-a472-c6e1496713e0",
+		"name": "Comments",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all comments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/posts/14/comments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"posts",
+						"14",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create comment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjM0MzQ3OTg5LCJleHAiOjE2MzQzNTE1ODl9.rtUadserFvmG6hNM3_PLTS02lEnKQWRBXGaP3PXZa3c",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"comment created 4\",\r\n  \"body\": \"nice!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/posts/14/comments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"posts",
+						"14",
+						"comments"
+					],
+					"query": [
+						{
+							"key": "comment",
+							"value": "this is a comment",
+							"disabled": true
+						},
+						{
+							"key": "draft",
+							"value": "false",
+							"disabled": true
+						},
+						{
+							"key": "post_id",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit comment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjM0MzQ3OTg5LCJleHAiOjE2MzQzNTE1ODl9.rtUadserFvmG6hNM3_PLTS02lEnKQWRBXGaP3PXZa3c",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"title updated 1\",\r\n  \"body\": \"nice! updated\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/posts/14/comments/11",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"posts",
+						"14",
+						"comments",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete comment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjM0MzUxNzM4LCJleHAiOjE2MzQzNTUzMzh9.sgYuRhPFYaIEmcSesdjNRPqIyyiHNI142jrk9EQdFfI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/accounts/me/posts/14/comments/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"accounts",
+						"me",
+						"posts",
+						"14",
+						"comments",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete comment Moderator",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/accounts/:accountuuid/posts/:postuuid/comments/:uuid",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"accounts",
+						":accountuuid",
+						"posts",
+						":postuuid",
+						"comments",
+						":uuid"
+					],
+					"variable": [
+						{
+							"key": "accountuuid",
+							"value": null
+						},
+						{
+							"key": "postuuid",
+							"value": null
+						},
+						{
+							"key": "uuid",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

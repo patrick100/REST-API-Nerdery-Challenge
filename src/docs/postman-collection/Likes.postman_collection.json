@@ -1,0 +1,76 @@
+{
+	"info": {
+		"_postman_id": "37cd8255-dc8d-4abf-b2ab-5fbde578066f",
+		"name": "Likes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "New like",
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:3000/likes?user_id&post_id",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"likes"
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": null
+						},
+						{
+							"key": "post_id",
+							"value": null
+						},
+						{
+							"key": "comment_id",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "htt",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:3000/quotes/?name=Kevin&lastname=cotrina",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"quotes",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Kevin"
+						},
+						{
+							"key": "lastname",
+							"value": "cotrina"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
