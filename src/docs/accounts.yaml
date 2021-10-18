@@ -1,0 +1,111 @@
+paths:
+  /accounts/{accountId}:
+    get:
+      tags:
+        - Accounts
+      summary: Get the public profile of an account
+      produces:
+        - application/json
+      parameters:
+        - name: accountId
+          in: path
+          type: integer
+          required: true
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseAccountPublic'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /accounts/me:
+    get:
+      security:
+        - jwt: []
+      tags:
+        - Accounts
+      summary: Get personal profile information
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseAccount'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /accounts:
+    patch:
+      security:
+        - jwt: []
+      tags:
+        - Accounts
+      summary: Update personal profile information
+      parameters:
+        - in: body
+          name: body
+          description: Update profile
+          required: true
+          schema:
+            type: object
+            properties:
+              isPublicName:
+                type: boolean
+              isPublicEmail:
+                type: boolean
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseComment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+components:
+  schemas:
+    Account:
+      type: object
+      properties:
+        uuid:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        isPublicName:
+          type: boolean
+        isPublicEmail:
+          type: boolean
+    AccountPublic:
+      type: object
+      properties:
+        uuid:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+    ResponseAccount:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Account'
+    ResponseAccountPublic:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AccountPublic'

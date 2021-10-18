@@ -1,0 +1,36 @@
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 4xx
+        title:
+          type: string
+          example: Error Title
+        message:
+          type: string
+          example: Description of the error
+      required:
+        - code
+        - message
+  responses:
+    Created:
+      description: Created
+    Success:
+      description: OK
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NoContent:
+      description: No Content

@@ -1,5 +1,29 @@
 paths:
-  /accounts/me/posts/{postId}/comments/create:
+  /posts/{postId}/comments:
+    get:
+      tags:
+        - Comments
+      summary: Get all comments of a post
+      produces:
+        - application/json
+      parameters:
+        - name: postId
+          in: path
+          type: integer
+          required: true
+        - in: query
+          name: page
+        - in: query
+          name: size
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseComments'
+        '404':
+          $ref: '#/components/responses/NotFound'
     post:
       security:
         - jwt: []
@@ -8,60 +32,76 @@ paths:
       summary: Create a new comment in a post
       produces:
         - application/json
-  /posts/{postId}/comments:
-    get:
-      tags:
-        - Comments
-      summary: Get all comments of a post
-      produces:
-        - application/json
-      responses:
-        201:
-          description: An object with all posts
-
-  /accounts/me/posts/{postId}/comments/{commentId}:
-    put:
-      security:
-        - jwt: []
-      tags:
-        - Comments
-      summary: Update a personal comment
-      produces:
-        - application/json
       parameters:
-        - name: id
+        - name: postId
           in: path
-          description:
+          type: integer
           required: true
-          type: string
         - in: body
-          name: update pet
-          description: It enables a user to update pet profile
-          required: false
+          name: body
+          description: Create a new comment
+          required: true
+          schema:
+            type: object
+            properties:
+              post_id:
+                type: integer
+              comment:
+                type: string
+              draft:
+                type: boolean
       responses:
-        201:
-          description: The post updated
-        401:
-          description: Unauthorized users
-    delete:
+        '201':
+          description: 'Created'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseComment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /posts/{postId}/comments/{commentId}:
+    patch:
       security:
         - jwt: []
       tags:
         - Comments
-      summary: Delete a personal comment
+      summary: Update an existing comment by Id
       produces:
         - application/json
       parameters:
-        - name: id
+        - name: postId
           in: path
-          description:
+          type: integer
           required: true
-          type: string
+        - name: commentId
+          in: path
+          type: integer
+          required: true
+        - in: body
+          name: body
+          description: Update a comment
+          required: true
+          schema:
+            type: object
+            properties:
+              comment:
+                type: string
+              draft:
+                type: boolean
       responses:
-        201:
-          description: An object with a user updated user profile detail
-        401:
-          description: Unauthorized users
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseComment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
 
   /accounts/{accountId}/posts/{postId}/comments/{commentId}:
     delete:
@@ -73,13 +113,98 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: id
+        - name: accountId
           in: path
-          description:
+          type: integer
           required: true
-          type: string
+        - name: postId
+          in: path
+          type: integer
+          required: true
+        - name: commentId
+          in: path
+          type: integer
+          required: true
       responses:
-        201:
-          description: An object with a user updated user profile detail
-        401:
-          description: Unauthorized users
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseComment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /accounts/me/posts/{postId}/comments/{commentId}:
+    delete:
+      security:
+        - jwt: []
+      tags:
+        - Comments
+      summary: Delete a personal comment
+      produces:
+        - application/json
+      parameters:
+        - name: postId
+          in: path
+          type: integer
+          required: true
+        - name: commentId
+          in: path
+          type: integer
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseComment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+components:
+  schemas:
+    Comment:
+      type: object
+      properties:
+        uuid:
+          type: integer
+          format: uuid
+        postId:
+          type: integer
+        userId:
+          type: integer
+        comment:
+          type: string
+        likes:
+          type: integer
+        dislikes:
+          type: integer
+
+    ResponseComment:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Comment'
+
+    ResponseComments:
+      type: object
+      properties:
+        pagination:
+          type: object
+          properties:
+            current_page:
+              type: integer
+            prev_page:
+              type: boolean
+            next_page:
+              type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'

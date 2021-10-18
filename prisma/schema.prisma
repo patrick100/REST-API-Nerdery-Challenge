@@ -1,0 +1,109 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id                  Int       @id @default(autoincrement())
+  uuid                String    @unique @default(uuid()) @db.Uuid
+  firstName           String
+  lastName            String
+  email               String    @unique
+  password            String
+  isPublicEmail       Boolean   @default(false)
+  isPublicName        Boolean   @default(false)
+  isModerator         Boolean   @default(false)
+  emailVerifiedAt     DateTime?
+  emailVerified       String?
+  tokenVerifyEmail    String?
+  tokenChangePassword String?
+  isEmailVerified     Boolean   @default(false)
+  posts               Post[]
+  comments            Comment[]
+  reports             Report[]
+  likes               Like[]
+  tokens              Token[]
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+}
+
+model Token {
+  id             Int      @id @default(autoincrement())
+  uuid           String   @unique @default(uuid()) @db.Uuid
+  token          String   @unique
+  user           User     @relation(fields: [userId], references: [id])
+  userId         Int
+  tokenExpiresAt DateTime
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Post {
+  id        Int       @id @default(autoincrement())
+  uuid      String    @unique @default(uuid()) @db.Uuid
+  userId    Int
+  user      User      @relation(fields: [userId], references: [id])
+  body      String    @db.VarChar(255)
+  title     String    @db.VarChar(255)
+  likes     Int       @default(0)
+  dislikes  Int       @default(0)
+  isDraft   Boolean   @default(true)
+  comments  Comment[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  uuid      String   @unique @default(uuid()) @db.Uuid
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  postId    Int
+  post      Post     @relation(fields: [postId], references: [id])
+  body      String   @db.Text
+  title     String   @db.VarChar(255)
+  likes     Int      @default(0)
+  dislikes  Int      @default(0)
+  isDraft   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Report {
+  id          Int       @id @default(autoincrement())
+  uuid        String    @unique @default(uuid()) @db.Uuid
+  userId      Int
+  user        User      @relation(fields: [userId], references: [id])
+  type        TableType
+  resourceId  Int
+  title       String    @db.VarChar(255)
+  description String    @db.Text
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Like {
+  id         Int       @id @default(autoincrement())
+  uuid       String    @unique @default(uuid()) @db.Uuid
+  userId     Int
+  user       User      @relation(fields: [userId], references: [id])
+  type       TableType
+  resourceId Int
+  isLike     Boolean
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@unique([userId, resourceId, type], name: "likeIdentifier")
+}
+
+enum TableType {
+  POST
+  COMMENT
+}

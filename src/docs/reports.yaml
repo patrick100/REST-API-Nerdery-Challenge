@@ -1,36 +1,163 @@
 paths:
-  /accounts/{accountId}/posts/{postId}/report:
+  /posts/reports:
+    get:
+      security:
+        - jwt: []
+      tags:
+        - Reports
+      summary: Get all post reports as a moderator
+      parameters:
+        - in: query
+          name: page
+        - in: query
+          name: size
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseReports'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /comments/reports:
+    get:
+      security:
+        - jwt: []
+      tags:
+        - Reports
+      summary: Get all comment reports as a moderator
+      parameters:
+        - in: query
+          name: page
+        - in: query
+          name: size
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseReports'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /posts/{postId}/reports:
     post:
       security:
         - jwt: []
       tags:
         - Reports
       summary: Report a post
+      parameters:
+        - in: path
+          name: postId
+          required: true
+        - in: body
+          name: body
+          description: Create a post report
+          required: true
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+              description:
+                type: string
       produces:
         - application/json
-    delete:
-      security:
-        - jwt: []
-      tags:
-        - Reports
-      summary: Remove a report from a post
-      produces:
-        - application/json
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseReport'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
 
-  /accounts/{accountId}/comments/{commentId}/report:
+  /posts/{postId}/comments/{commentId}/reports:
     post:
       security:
         - jwt: []
       tags:
         - Reports
       summary: Report a comment
+      parameters:
+        - in: path
+          name: postId
+          required: true
+        - in: path
+          name: commentId
+          required: true
+        - in: body
+          name: body
+          description: Create a comment report
+          required: true
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+              description:
+                type: string
       produces:
         - application/json
-    delete:
-      security:
-        - jwt: []
-      tags:
-        - Reports
-      summary: Remove a report from a comment
-      produces:
-        - application/json
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseReport'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+components:
+  schemas:
+    Report:
+      type: object
+      properties:
+        uuid:
+          type: integer
+          format: uuid
+        userId:
+          type: integer
+        resourceId:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+
+    ResponseReport:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Report'
+
+    ResponseReports:
+      type: object
+      properties:
+        pagination:
+          type: object
+          properties:
+            current_page:
+              type: integer
+            prev_page:
+              type: boolean
+            next_page:
+              type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Report'

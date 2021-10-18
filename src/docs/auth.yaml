@@ -1,0 +1,163 @@
+paths:
+  /sign-up:
+    post:
+      tags:
+        - Auth
+      summary: Register a user into the system
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Register a new user
+          required: true
+          schema:
+            type: object
+            required: true
+            properties:
+              name:
+                type: string
+                example: Juan Perez
+              email:
+                type: string
+                example: juanperez@ravn.co
+              password:
+                type: string
+                example: mypassword123
+      responses:
+        '201':
+          description: 'Created'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseAccountPublic'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /sign-in:
+    post:
+      tags:
+        - Auth
+      summary: Login user into the system
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Login as a registered user
+          required: true
+          schema:
+            type: object
+            required: true
+            properties:
+              email:
+                type: string
+                example: user@ravn.co
+              password:
+                type: string
+                example: mypassword123
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseAuth'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /sign-out:
+    delete:
+      security:
+        - jwt: []
+      tags:
+        - Auth
+      summary: Disconnect a user from the system
+      produces:
+        - application/json
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /verify-email/{accountId}/{token}:
+    patch:
+      tags:
+        - Auth
+      summary: Verify user email
+      parameters:
+        - in: path
+          name: accountId
+          required: true
+        - in: path
+          name: token
+          required: true
+      produces:
+        - application/json
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /password-reset:
+    patch:
+      tags:
+        - Auth
+      summary: Send password reset link
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Create
+          required: true
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+
+  /password-reset/{accountId}/{token}:
+    patch:
+      tags:
+        - Auth
+      summary: Reset user password
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: accountId
+          required: true
+        - in: path
+          name: token
+          required: true
+        - in: body
+          name: body
+          description: Create
+          required: true
+          schema:
+            type: object
+            properties:
+              password:
+                type: string
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+
+components:
+  schemas:
+    ResponseAuth:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            token:
+              type: string
+            user:
+              $ref: '#/components/schemas/AccountPublic'

@@ -29,4 +29,4 @@ const options = {
   apis: ['./src/docs/**/*.yaml'],
 };
 
-module.exports = swaggerJSDoc(options);
+export default swaggerJSDoc(options);
