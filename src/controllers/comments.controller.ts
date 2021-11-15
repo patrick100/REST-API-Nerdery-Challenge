@@ -1,6 +1,6 @@
 import { UpdateCommentDto } from './../dtos/comments/request/update-comment.dto';
 import { CreateCommentDto } from './../dtos/comments/request/create-comment.dto';
-import RequestWithUserId from 'src/interfaces/requestWithUserId.interface';
+import RequestWithUserId from 'src/interfaces/request-with-user-id.interface';
 import { convertToJson, responseApi, responseApiArray } from './../utils/serializer';
 import { plainToClass } from 'class-transformer';
 import { Request, Response } from 'express';

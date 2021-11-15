@@ -8,7 +8,7 @@ import { prisma } from '../server';
 import bcrypt from 'bcrypt';
 import { createToken } from '../utils/auth';
 import { sendEmail } from '../utils/email';
-import AuthData from 'src/interfaces/authData.interface';
+import AuthData from 'src/interfaces/auth-data.interface';
 import { URL_BASE } from '../config';
 import Email from '../interfaces/email.interface';
 import crypto from 'crypto';

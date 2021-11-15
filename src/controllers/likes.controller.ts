@@ -2,7 +2,7 @@ import { plainToClass } from 'class-transformer';
 import { Request, Response } from 'express';
 import { LikesService } from '../services/likes.service';
 import { CreateLikeDto } from '../dtos/likes/request/create-like.dto';
-import RequestWithUserId from '../interfaces/requestWithUserId.interface';
+import RequestWithUserId from '../interfaces/request-with-user-id.interface';
 
 export async function giveLikePost(expressRequest: Request, res: Response): Promise<void> {
   const req = expressRequest as RequestWithUserId;

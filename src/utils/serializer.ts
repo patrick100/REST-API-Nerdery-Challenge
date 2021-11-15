@@ -3,7 +3,7 @@ export const convertToJson = (input: any): JSON => {
 };
 
 export const responseApi = (input: JSON) => {
-  return { data: { ...input } };
+  return { data: input };
 };
 
 export const responseApiArray = (input: JSON) => {
@@ -13,8 +13,8 @@ export const responseApiArray = (input: JSON) => {
 export const responseApiAuth = (token: string, user: JSON) => {
   return {
     data: {
-      user: { ...user },
-      token: token,
+      user,
+      token,
     },
   };
 };

@@ -1,0 +1,115 @@
+{
+	"info": {
+		"_postman_id": "dfabb48a-8c09-42aa-bc3a-112465470305",
+		"name": "Accounts",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get profile account",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImlhdCI6MTYzNDU3MjQ2NiwiZXhwIjoxNjM0NTc2MDY2fQ.cGvP6Apie-BfOxG2LGLoDd1DHdyhfFDqsVZl3MZ_408",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/accounts/51d16f9b-50c2-4d9a-a34a-13a2644297f2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"accounts",
+						"51d16f9b-50c2-4d9a-a34a-13a2644297f2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get my profile account",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImlhdCI6MTYzNDU3MjQ2NiwiZXhwIjoxNjM0NTc2MDY2fQ.cGvP6Apie-BfOxG2LGLoDd1DHdyhfFDqsVZl3MZ_408",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/accounts/me",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"accounts",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update personal profile",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "verification email",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/verify-email/57096486-7f22-4be6-bd81-39b9a6be917a/04c2acf392c4bbd3a6063975",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"verify-email",
+						"57096486-7f22-4be6-bd81-39b9a6be917a",
+						"04c2acf392c4bbd3a6063975"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

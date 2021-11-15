@@ -28,10 +28,13 @@ export class PostsService {
   }
 
   static async update(userId: number, id: number, input: UpdatePostDto): Promise<Post> {
-    const currentUser = await prisma.post.findUnique({ where: { id: userId } });
-    const post = await prisma.post.findUnique({ where: { id } });
+    const currentUser = await prisma.user.findUnique({ where: { id: userId } });
+
+    const post = await prisma.post.findUnique({ where: { id }, rejectOnNotFound: false });
+
+    if (!post) throw new createError.NotFound(`Post ${id} not Found`);
     if (currentUser.id !== post.userId) {
-      throw new createError.Unauthorized('Must be the author to update a post');
+      throw new createError.Unauthorized('You are not the owner of this post');
     }
 
     return prisma.post.update({

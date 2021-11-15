@@ -63,7 +63,7 @@ export class CommentsService {
     });
 
     if (comment.userId !== userId) {
-      throw new createError.Forbidden(`You are not allowed to update this comment`);
+      throw new createError.Forbidden('You are not the owner of this comment');
     }
 
     return prisma.comment.update({
@@ -88,7 +88,7 @@ export class CommentsService {
     }
 
     if (comment.userId !== userId) {
-      throw new createError.Forbidden(`You are not allowed to delete this comment`);
+      throw new createError.Forbidden(`You are not the owner of this comment`);
     }
 
     try {

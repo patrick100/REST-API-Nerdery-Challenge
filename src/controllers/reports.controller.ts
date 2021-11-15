@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { ReportsService } from '../services/reports.service';
 import { CreateReportDto } from '../dtos/reports/request/create-report.dto';
 import { ReportDto } from '../dtos/reports/response/report.dto';
-import RequestWithUserId from '../interfaces/requestWithUserId.interface';
+import RequestWithUserId from '../interfaces/request-with-user-id.interface';
 import { convertToJson, responseApi } from '../utils/serializer';
 
 export async function reportPost(expressRequest: Request, res: Response): Promise<void> {
