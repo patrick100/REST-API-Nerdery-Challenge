@@ -9,7 +9,7 @@ export class ReportsService {
 
     if (!post) throw createError(404, 'Not Found Post');
 
-    return await prisma.report.create({ data: input });
+    return prisma.report.create({ data: input });
   }
 
   static async reportComment(input: CreateReportDto): Promise<Report> {
@@ -17,6 +17,6 @@ export class ReportsService {
 
     if (!comment) throw createError(404, 'Not Found Comment');
 
-    return await prisma.report.create({ data: input });
+    return prisma.report.create({ data: input });
   }
 }

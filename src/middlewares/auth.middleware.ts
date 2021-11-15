@@ -1,9 +1,9 @@
 import { Request, NextFunction, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import RequestWithUserId from '../interfaces/requestWithUserId.interface';
+import RequestWithUserId from '../interfaces/request-with-user-id.interface';
 import { JWT_SECRET } from '../config';
 import createError from 'http-errors';
-import DataStoredInToken from '../interfaces/dataStoredInToken.interface';
+import DataStoredInToken from '../interfaces/data-stored-in-token.interface';
 import { prisma } from '../server';
 
 export const verifyToken = async (

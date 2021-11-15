@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { UpdatePublicInfoUserDto } from '../dtos/users/request/update-public-info-user.dto';
 import { UserDto } from '../dtos/users/response/user.dto';
 import { UsersService } from '../services/users.service';
-import RequestWithUserId from '../interfaces/requestWithUserId.interface';
+import RequestWithUserId from '../interfaces/request-with-user-id.interface';
 
 export async function findOne(req: Request, res: Response): Promise<void> {
   const user = await UsersService.findOne(req.params.uuid);

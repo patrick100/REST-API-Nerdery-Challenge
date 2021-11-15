@@ -13,17 +13,17 @@ generator client {
 model User {
   id                  Int       @id @default(autoincrement())
   uuid                String    @unique @default(uuid()) @db.Uuid
-  firstName           String
-  lastName            String
+  firstName           String    @map("first_name")
+  lastName            String    @map("last_name")
   email               String    @unique
   password            String
-  isPublicEmail       Boolean   @default(false)
-  isPublicName        Boolean   @default(false)
-  isModerator         Boolean   @default(false)
-  emailVerifiedAt     DateTime?
-  emailVerified       String?
-  tokenVerifyEmail    String?
-  tokenChangePassword String?
+  isPublicEmail       Boolean   @map("is_public_email") @default(false)
+  isPublicName        Boolean   @map("is_public_name") @default(false)
+  isModerator         Boolean   @map("is_moderator") @default(false)
+  emailVerifiedAt     DateTime? @map("email_verified_at")
+  emailVerified       String?   @map("email_verified")
+  tokenVerifyEmail    String?   @map("token_verify_email")
+  tokenChangePassword String?   @map("token_change_password")
   isEmailVerified     Boolean   @default(false)
   posts               Post[]
   comments            Comment[]
@@ -32,6 +32,8 @@ model User {
   tokens              Token[]
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
+
+  @@map(name: "users")
 }
 
 model Token {
@@ -39,68 +41,77 @@ model Token {
   uuid           String   @unique @default(uuid()) @db.Uuid
   token          String   @unique
   user           User     @relation(fields: [userId], references: [id])
-  userId         Int
-  tokenExpiresAt DateTime
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  userId         Int      @map("user_id")
+  tokenExpiresAt DateTime @map("token_expires_at")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  @@map(name: "tokens")
 }
 
 model Post {
   id        Int       @id @default(autoincrement())
   uuid      String    @unique @default(uuid()) @db.Uuid
-  userId    Int
+  userId    Int       @map("user_id")
   user      User      @relation(fields: [userId], references: [id])
   body      String    @db.VarChar(255)
   title     String    @db.VarChar(255)
   likes     Int       @default(0)
   dislikes  Int       @default(0)
-  isDraft   Boolean   @default(true)
+  isDraft   Boolean   @map("is_draft") @default(true) 
   comments  Comment[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime  @map("created_at") @default(now())
+  updatedAt DateTime  @map("updated_at") @updatedAt
+
+  @@map(name: "posts")
 }
 
 model Comment {
   id        Int      @id @default(autoincrement())
   uuid      String   @unique @default(uuid()) @db.Uuid
-  userId    Int
+  userId    Int      @map("user_id") 
   user      User     @relation(fields: [userId], references: [id])
-  postId    Int
+  postId    Int      @map("post_id") 
   post      Post     @relation(fields: [postId], references: [id])
   body      String   @db.Text
   title     String   @db.VarChar(255)
   likes     Int      @default(0)
   dislikes  Int      @default(0)
   isDraft   Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @map("created_at") @default(now())
+  updatedAt DateTime @map("updated_at") @updatedAt
+
+  @@map(name: "comments")
 }
 
 model Report {
   id          Int       @id @default(autoincrement())
   uuid        String    @unique @default(uuid()) @db.Uuid
-  userId      Int
+  userId      Int       @map("user_id")
   user        User      @relation(fields: [userId], references: [id])
   type        TableType
-  resourceId  Int
+  resourceId  Int       @map("resource_id")
   title       String    @db.VarChar(255)
   description String    @db.Text
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime  @map("created_at") @default(now())
+  updatedAt   DateTime  @map("updated_at") @updatedAt
+
+  @@map(name: "reports")
 }
 
 model Like {
   id         Int       @id @default(autoincrement())
   uuid       String    @unique @default(uuid()) @db.Uuid
-  userId     Int
+  userId     Int       @map("user_id")
   user       User      @relation(fields: [userId], references: [id])
   type       TableType
-  resourceId Int
-  isLike     Boolean
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  resourceId Int       @map("resource_id") 
+  isLike     Boolean   @map("is_like")  
+  createdAt  DateTime  @map("created_at") @default(now())
+  updatedAt  DateTime  @map("updated_at") @updatedAt
 
   @@unique([userId, resourceId, type], name: "likeIdentifier")
+  @@map(name: "likes")
 }
 
 enum TableType {

@@ -3,7 +3,7 @@ import { PostsService } from './../services/posts.service';
 import { plainToClass } from 'class-transformer';
 import { Request, Response } from 'express';
 import { PostDto } from '../dtos/posts/response/post.dto';
-import RequestWithUserId from 'src/interfaces/requestWithUserId.interface';
+import RequestWithUserId from 'src/interfaces/request-with-user-id.interface';
 import { CreatePostDto } from './../dtos/posts/request/create-post.dto';
 import { UpdatePostDto } from './../dtos/posts/request/update-post.dto';
 
